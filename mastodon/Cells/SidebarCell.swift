@@ -68,22 +68,14 @@ class SidebarCell: SwipeTableViewCell {
         userName.numberOfLines = 0
         userTag.numberOfLines = 0
         toot.numberOfLines = 0
-        
-        userName.textColor = Colours.black
+
         userTag.textColor = Colours.black.withAlphaComponent(0.6)
         date.textColor = Colours.black.withAlphaComponent(0.6)
-        toot.textColor = Colours.black
-        
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
+
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         date.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
-        
-        
+
         toot.enabledTypes = [.mention, .hashtag, .url]
-        toot.mentionColor = Colours.tabSelected
-        toot.hashtagColor = Colours.tabSelected
-        toot.URLColor = Colours.tabSelected
         
         contentView.addSubview(typeImage)
         contentView.addSubview(profileImageView)
@@ -213,12 +205,7 @@ class SidebarCell: SwipeTableViewCell {
         boost1.setImage(UIImage(named: "boost3")?.maskWithColor(color: Colours.gray), for: .normal)
         more1.setImage(UIImage(named: "more")?.maskWithColor(color: Colours.gray), for: .normal)
         
-        toot.mentionColor = Colours.tabSelected
-        toot.hashtagColor = Colours.tabSelected
-        toot.URLColor = Colours.tabSelected
-        
-        
-        
+        // TODO(Vyr): use alternate colors for toot and userName text
         if status.type == .favourite {
             profileImageView.isUserInteractionEnabled = true
             userName.text = "\(status.account.displayName) liked"
@@ -298,57 +285,27 @@ class SidebarCell: SwipeTableViewCell {
             date.text = status.createdAt.toString(dateStyle: .short, timeStyle: .short)
         }
         
-        //        toot.text = status.status?.content.stripHTML() ?? status.account.note.stripHTML()
-        
-        
-        
-        
-        
-        if status.status?.emojis.isEmpty ?? true {
-            toot.text = status.status?.content.stripHTML() ?? status.account.note.stripHTML()
+        if let status = status.status {
+            self.toot.attributedText = status.asRichText() ?? RichText.failure
         } else {
-            let attributedString = NSMutableAttributedString(string: status.status?.content.stripHTML() ?? status.account.note.stripHTML())
-            for y in (status.status?.emojis)! {
-                let textAttachment = NSTextAttachment()
-                textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.toot.font.lineHeight), height: Int(self.toot.font.lineHeight))
-                let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                while attributedString.mutableString.contains(":\(y.shortcode):") {
-                    let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                    attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                }
-            }
-            self.toot.attributedText = attributedString
-            self.reloadInputViews()
+            self.toot.attributedText = status.account.noteAsRichText() ?? RichText.failure
         }
-        
-        
-        
-        if status.account.emojis.isEmpty {
-            userName.text = status.account.displayName.stripHTML()
-        } else {
-            let attributedString = NSMutableAttributedString(string: status.account.displayName.stripHTML())
-            for y in status.account.emojis {
-                let textAttachment = NSTextAttachment()
-                textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.userName.font.lineHeight), height: Int(self.userName.font.lineHeight))
-                let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                while attributedString.mutableString.contains(":\(y.shortcode):") {
-                    let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                    attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                }
-            }
-            self.userName.attributedText = attributedString
-            self.reloadInputViews()
+        let activitySuffix: String
+        switch status.type {
+        case .favourite:
+            activitySuffix = " liked"
+        case .reblog:
+            activitySuffix = " boosted"
+        case .mention:
+            activitySuffix = " mentioned you"
+        case .follow:
+            activitySuffix = " followed you"
         }
-        
-        
-        
-        
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
+        self.userName.attributedText = status.account.displayNameAsRichText(suffix: activitySuffix) ?? RichText.failure
+        self.reloadInputViews()
+
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         date.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
         
         profileImageView.pin_setPlaceholder(with: UIImage(named: "logo"))
         profileImageView.pin_updateWithProgress = true

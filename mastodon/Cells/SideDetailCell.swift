@@ -107,121 +107,22 @@ class SideDetailCell: UITableViewCell {
     }
     
     func configure(_ status: Status) {
-        
-        toot.mentionColor = Colours.tabSelected
-        toot.hashtagColor = Colours.tabSelected
-        toot.URLColor = Colours.tabSelected
-        
-        userName.text = status.reblog?.account.displayName ?? status.account.displayName
-        
-        
-        
         if (UserDefaults.standard.object(forKey: "mentionToggle") == nil || UserDefaults.standard.object(forKey: "mentionToggle") as! Int == 0) {
             userTag.text = "@\(status.reblog?.account.acct ?? status.account.acct)"
         } else {
             userTag.text = "@\(status.reblog?.account.username ?? status.account.username)"
         }
         date.text = status.reblog?.createdAt.toStringWithRelativeTime() ?? status.createdAt.toStringWithRelativeTime()
-        if status.reblog?.content.stripHTML() != nil {
-            //            toot.text = "\(status.reblog?.content.stripHTML() ?? "")\n\n\u{21bb} @\(status.account.username) boosted"
-            
-            
-            
-            
-            
-            if status.reblog!.emojis.isEmpty {
-                toot.text = "\(status.reblog?.content.stripHTML() ?? "")\n\n\u{21bb} @\(status.account.acct) boosted"
-            } else {
-                let attributedString = NSMutableAttributedString(string: "\(status.reblog?.content.stripHTML() ?? "")\n\n\u{21bb} @\(status.account.acct) boosted")
-                for y in status.reblog?.emojis ?? status.emojis {
-                    let textAttachment = NSTextAttachment()
-                    textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                    textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.toot.font.lineHeight), height: Int(self.toot.font.lineHeight))
-                    let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                    while attributedString.mutableString.contains(":\(y.shortcode):") {
-                        let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                        attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                        
-                    }
-                }
-                self.toot.attributedText = attributedString
-                self.reloadInputViews()
-            }
-            
-            
-            
-            
-            if status.reblog?.account.emojis.isEmpty ?? true {
-                userName.text = status.reblog?.account.displayName.stripHTML()
-            } else {
-                let attributedString = NSMutableAttributedString(string: status.reblog?.account.displayName.stripHTML() ?? "")
-                for y in status.reblog?.account.emojis ?? [] {
-                    let textAttachment = NSTextAttachment()
-                    textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                    textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.userName.font.lineHeight), height: Int(self.userName.font.lineHeight))
-                    let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                    while attributedString.mutableString.contains(":\(y.shortcode):") {
-                        let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                        attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                    }
-                }
-                self.userName.attributedText = attributedString
-                self.reloadInputViews()
-            }
-            
-            
-            
-            
+
+        if let reblog = status.reblog {
+            toot.attributedText = reblog.asRichText(suffix: "\u{21bb} @\(status.account.acct) boosted") ?? RichText.failure
+            userName.attributedText = reblog.account.displayNameAsRichText() ?? RichText.failure
         } else {
-            //            toot.text = status.content.stripHTML()
-            
-            
-            
-            
-            
-            if status.emojis.isEmpty {
-                toot.text = status.content.stripHTML()
-            } else {
-                let attributedString = NSMutableAttributedString(string: status.content.stripHTML())
-                for y in status.emojis {
-                    let textAttachment = NSTextAttachment()
-                    textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                    textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.toot.font.lineHeight), height: Int(self.toot.font.lineHeight))
-                    let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                    while attributedString.mutableString.contains(":\(y.shortcode):") {
-                        let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                        attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                        
-                    }
-                }
-                self.toot.attributedText = attributedString
-                self.reloadInputViews()
-            }
-            
-            
-            
-            if status.account.emojis.isEmpty {
-                userName.text = status.account.displayName.stripHTML()
-            } else {
-                let attributedString = NSMutableAttributedString(string: status.account.displayName.stripHTML())
-                for y in status.account.emojis {
-                    let textAttachment = NSTextAttachment()
-                    textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                    textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.userName.font.lineHeight), height: Int(self.userName.font.lineHeight))
-                    let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                    while attributedString.mutableString.contains(":\(y.shortcode):") {
-                        let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                        attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                    }
-                }
-                self.userName.attributedText = attributedString
-                self.reloadInputViews()
-            }
-            
-            
-            
+            toot.attributedText = status.asRichText() ?? RichText.failure
+            userName.attributedText = status.account.displayNameAsRichText() ?? RichText.failure
         }
-        
+        self.reloadInputViews()
+
         let z = status.reblog?.application?.name ?? status.application?.name ?? ""
         let da = status.reblog?.createdAt.toString(dateStyle: .medium, timeStyle: .medium) ?? status.createdAt.toString(dateStyle: .medium, timeStyle: .medium)
         if z == "" {
@@ -265,11 +166,9 @@ class SideDetailCell: UITableViewCell {
         if (UserDefaults.standard.object(forKey: "proCorner") != nil && UserDefaults.standard.object(forKey: "proCorner") as! Int == 2) {
             profileImageView.layer.cornerRadius = 0
         }
-        
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
+
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         date.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
         fromClient.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         faves.titleLabel?.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         

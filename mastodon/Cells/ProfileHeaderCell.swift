@@ -138,7 +138,7 @@ class ProfileHeaderCell: SwipeTableViewCell {
     }
     
     func configure(_ status: Account) {
-        
+        // TODO(Vyr): use nonstandard link colors with rich text
         toot.mentionColor = UIColor.white.withAlphaComponent(0.7)
         toot.hashtagColor = UIColor.white.withAlphaComponent(0.7)
         toot.URLColor = UIColor.white.withAlphaComponent(0.7)
@@ -243,34 +243,12 @@ class ProfileHeaderCell: SwipeTableViewCell {
         headerImageView.pin_setImage(from: URL(string: "\(status.header)"))
         headerImageView.layer.masksToBounds = true
         
-        userName.text = status.displayName
-        
-        
-        
-        if status.emojis.isEmpty {
-            userName.text = status.displayName.stripHTML()
-        } else {
-            let attributedString = NSMutableAttributedString(string: status.displayName.stripHTML())
-            for y in status.emojis {
-                let textAttachment = NSTextAttachment()
-                textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.userName.font.lineHeight), height: Int(self.userName.font.lineHeight))
-                let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                while attributedString.mutableString.contains(":\(y.shortcode):") {
-                    let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                    attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                }
-            }
-            self.userName.attributedText = attributedString
-            self.reloadInputViews()
-        }
-        
-        
-        
+        userName.attributedText = status.displayNameAsRichText() ?? RichText.failure
         userTag.text = "@\(status.acct)"
-        toot.text = status.note.stripHTML()
+        toot.attributedText = status.noteAsRichText() ?? RichText.failure
         date.text = "Joined on \(status.createdAt.toString(dateStyle: .medium, timeStyle: .medium))"
-        
+        self.reloadInputViews()
+
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
         let formattedNumber = numberFormatter.string(from: NSNumber(value: status.followingCount))

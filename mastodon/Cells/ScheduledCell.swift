@@ -76,6 +76,7 @@ class ScheduledCell: SwipeTableViewCell {
         let dmy = String(format: "%0.2d/%0.2d/%0.2d", day, month, year)
         userName.text = "Scheduled for \(ti) on \(dmy)"
         userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
+        // TODO(Vyr): come back to this one, it's a special case
         toot.text = status.params.text
         toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
     }
@@ -189,6 +190,7 @@ class ScheduledCellImage: SwipeTableViewCell {
         let dmy = String(format: "%0.2d/%0.2d/%0.2d", day, month, year)
         userName.text = "Scheduled for \(ti) on \(dmy)"
         userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
+        // TODO(Vyr): come back to this one, it's a special case
         toot.text = status.params.text
         toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
         

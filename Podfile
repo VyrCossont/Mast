@@ -21,6 +21,8 @@ pod 'Disk'
 pod 'Alamofire'
 pod 'SwiftyJSON'
 pod 'SwiftyGiphy'
+pod 'SwiftSoup'
+pod 'HTMLEntities', :git => 'https://github.com/IBM-Swift/swift-html-entities.git'
 
 end
 
