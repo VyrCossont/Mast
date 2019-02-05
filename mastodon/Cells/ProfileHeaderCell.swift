@@ -66,18 +66,13 @@ class ProfileHeaderCell: SwipeTableViewCell {
         userTag.numberOfLines = 0
         toot.numberOfLines = 0
         
-        userName.textColor = UIColor.white
         userTag.textColor = UIColor.white
         date.textColor = UIColor.white
-        toot.textColor = UIColor.white
         follows.titleLabel?.textColor = UIColor.white
         
-        userName.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
         userTag.font = UIFont.systemFont(ofSize: 14)
         date.font = UIFont.systemFont(ofSize: 12)
-        toot.font = UIFont.boldSystemFont(ofSize: 14)
         follows.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
-        toot.textAlignment = .center
         date.textAlignment = .center
         follows.titleLabel?.textAlignment = .center
         
@@ -138,7 +133,7 @@ class ProfileHeaderCell: SwipeTableViewCell {
     }
     
     func configure(_ status: Account) {
-        // TODO(Vyr): use nonstandard link colors with rich text
+        // TODO(Vyr): figure out how ActiveLabel parsing interacts with RichText.
         toot.mentionColor = UIColor.white.withAlphaComponent(0.7)
         toot.hashtagColor = UIColor.white.withAlphaComponent(0.7)
         toot.URLColor = UIColor.white.withAlphaComponent(0.7)
@@ -243,9 +238,9 @@ class ProfileHeaderCell: SwipeTableViewCell {
         headerImageView.pin_setImage(from: URL(string: "\(status.header)"))
         headerImageView.layer.masksToBounds = true
         
-        userName.attributedText = status.displayNameAsRichText() ?? RichText.failure
+        userName.attributedText = status.displayNameAsRichText(RichText.settingsDisplayNameProfile()) ?? RichText.failure
         userTag.text = "@\(status.acct)"
-        toot.attributedText = status.noteAsRichText() ?? RichText.failure
+        toot.attributedText = status.noteAsRichText(RichText.settingsProfile()) ?? RichText.failure
         date.text = "Joined on \(status.createdAt.toString(dateStyle: .medium, timeStyle: .medium))"
         self.reloadInputViews()
 

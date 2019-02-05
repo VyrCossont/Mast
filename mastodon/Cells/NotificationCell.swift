@@ -69,15 +69,11 @@ class NotificationCell: SwipeTableViewCell {
         userTag.numberOfLines = 0
         toot.numberOfLines = 0
         
-        userName.textColor = Colours.black
         userTag.textColor = Colours.black.withAlphaComponent(0.6)
         date.textColor = Colours.black.withAlphaComponent(0.6)
-        toot.textColor = Colours.black
         
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         date.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
         
         
         toot.enabledTypes = [.mention, .hashtag, .url]
@@ -210,7 +206,8 @@ class NotificationCell: SwipeTableViewCell {
         boost1.setImage(UIImage(named: "boost3")?.maskWithColor(color: Colours.gray), for: .normal)
         more1.setImage(UIImage(named: "more")?.maskWithColor(color: Colours.gray), for: .normal)
 
-        // TODO(Vyr): use alternate colors for toot and userName text
+        var tootSettings = RichText.settingsDefault()
+        var userNameSettings = RichText.settingsDisplayName()
         if status.type == .favourite {
             rep1.alpha = 0
             like1.alpha = 0
@@ -219,13 +216,11 @@ class NotificationCell: SwipeTableViewCell {
             profileImageView.isUserInteractionEnabled = true
             typeImage.setImage(UIImage(named: "like3"), for: .normal)
             if (UserDefaults.standard.object(forKey: "subtleToggle") == nil) || (UserDefaults.standard.object(forKey: "subtleToggle") as! Int == 0) {
-                toot.textColor = Colours.black
-                userName.textColor = Colours.black
                 userTag.textColor = Colours.black.withAlphaComponent(0.6)
                 date.textColor = Colours.black.withAlphaComponent(0.6)
             } else {
-                toot.textColor = Colours.black.withAlphaComponent(0.3)
-                userName.textColor = Colours.black.withAlphaComponent(0.3)
+                tootSettings = RichText.settingsDefaultSubtle()
+                userNameSettings = RichText.settingsDisplayNameSubtle()
                 userTag.textColor = Colours.black.withAlphaComponent(0.3)
                 date.textColor = Colours.black.withAlphaComponent(0.3)
             }
@@ -238,21 +233,17 @@ class NotificationCell: SwipeTableViewCell {
             profileImageView.isUserInteractionEnabled = true
             typeImage.setImage(UIImage(named: "boost3"), for: .normal)
             if (UserDefaults.standard.object(forKey: "subtleToggle") == nil) || (UserDefaults.standard.object(forKey: "subtleToggle") as! Int == 0) {
-                toot.textColor = Colours.black
-                userName.textColor = Colours.black
                 userTag.textColor = Colours.black.withAlphaComponent(0.6)
                 date.textColor = Colours.black.withAlphaComponent(0.6)
             } else {
-                toot.textColor = Colours.black.withAlphaComponent(0.3)
-                userName.textColor = Colours.black.withAlphaComponent(0.3)
+                tootSettings = RichText.settingsDefaultSubtle()
+                userNameSettings = RichText.settingsDisplayNameSubtle()
                 userTag.textColor = Colours.black.withAlphaComponent(0.3)
                 date.textColor = Colours.black.withAlphaComponent(0.3)
             }
         }
         if status.type == .mention {
             profileImageView.isUserInteractionEnabled = true
-            toot.textColor = Colours.black
-            userName.textColor = Colours.black
             userTag.textColor = Colours.black.withAlphaComponent(0.6)
             date.textColor = Colours.black.withAlphaComponent(0.6)
             if status.status?.visibility == .direct {
@@ -274,13 +265,11 @@ class NotificationCell: SwipeTableViewCell {
             profileImageView.isUserInteractionEnabled = false
             typeImage.setImage(UIImage(named: "follow3"), for: .normal)
             if (UserDefaults.standard.object(forKey: "subtleToggle") == nil) || (UserDefaults.standard.object(forKey: "subtleToggle") as! Int == 0) {
-                toot.textColor = Colours.black
-                userName.textColor = Colours.black
                 userTag.textColor = Colours.black.withAlphaComponent(0.6)
                 date.textColor = Colours.black.withAlphaComponent(0.6)
             } else {
-                toot.textColor = Colours.black.withAlphaComponent(0.3)
-                userName.textColor = Colours.black.withAlphaComponent(0.3)
+                tootSettings = RichText.settingsDefaultSubtle()
+                userNameSettings = RichText.settingsDisplayNameSubtle()
                 userTag.textColor = Colours.black.withAlphaComponent(0.3)
                 date.textColor = Colours.black.withAlphaComponent(0.3)
             }
@@ -300,9 +289,9 @@ class NotificationCell: SwipeTableViewCell {
         }
         
         if let status = status.status {
-            self.toot.attributedText = status.asRichText() ?? RichText.failure
+            self.toot.attributedText = status.asRichText(tootSettings) ?? RichText.failure
         } else {
-            self.toot.attributedText = status.account.noteAsRichText() ?? RichText.failure
+            self.toot.attributedText = status.account.noteAsRichText(tootSettings) ?? RichText.failure
         }
         let activitySuffix: String
         switch status.type {
@@ -315,7 +304,7 @@ class NotificationCell: SwipeTableViewCell {
         case .follow:
             activitySuffix = " followed you"
         }
-        self.userName.attributedText = status.account.displayNameAsRichText(suffix: activitySuffix) ?? RichText.failure
+        self.userName.attributedText = status.account.displayNameAsRichText(userNameSettings, suffix: activitySuffix) ?? RichText.failure
         self.reloadInputViews()
 
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)

@@ -66,18 +66,13 @@ class ProfileHeaderCellOwn: SwipeTableViewCell {
         userTag.numberOfLines = 0
         toot.numberOfLines = 0
         
-        userName.textColor = UIColor.white
         userTag.textColor = UIColor.white
         date.textColor = UIColor.white
-        toot.textColor = UIColor.white
         follows.titleLabel?.textColor = UIColor.white
         
-        userName.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
         userTag.font = UIFont.systemFont(ofSize: 14)
         date.font = UIFont.systemFont(ofSize: 12)
-        toot.font = UIFont.boldSystemFont(ofSize: 14)
         follows.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
-        toot.textAlignment = .center
         date.textAlignment = .center
         follows.titleLabel?.textAlignment = .center
         
@@ -255,28 +250,10 @@ class ProfileHeaderCellOwn: SwipeTableViewCell {
         headerImageView.pin_setImage(from: URL(string: "\(status.header)"))
         headerImageView.layer.masksToBounds = true
         
-        userName.text = status.displayName
         userTag.text = "@\(status.acct)"
-        toot.text = status.note.stripHTML()
-        
-        
-        if status.emojis.isEmpty {
-            userName.text = status.displayName.stripHTML()
-        } else {
-            let attributedString = NSMutableAttributedString(string: status.displayName.stripHTML())
-            for y in status.emojis {
-                let textAttachment = NSTextAttachment()
-                textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.userName.font.lineHeight), height: Int(self.userName.font.lineHeight))
-                let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                while attributedString.mutableString.contains(":\(y.shortcode):") {
-                    let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                    attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                }
-            }
-            self.userName.attributedText = attributedString
-            self.reloadInputViews()
-        }
+        toot.attributedText = status.noteAsRichText(RichText.settingsProfile()) ?? RichText.failure
+        userName.attributedText = status.displayNameAsRichText(RichText.settingsDisplayNameProfile())
+        reloadInputViews()
         
         date.text = "Joined on \(status.createdAt.toString(dateStyle: .medium, timeStyle: .medium))"
         
@@ -360,18 +337,13 @@ class ProfileHeaderCellOwn2: SwipeTableViewCell {
         userTag.numberOfLines = 0
         toot.numberOfLines = 0
         
-        userName.textColor = UIColor.white
         userTag.textColor = UIColor.white
         date.textColor = UIColor.white
-        toot.textColor = UIColor.white
         follows.titleLabel?.textColor = UIColor.white
         
-        userName.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
         userTag.font = UIFont.systemFont(ofSize: 14)
         date.font = UIFont.systemFont(ofSize: 12)
-        toot.font = UIFont.boldSystemFont(ofSize: 14)
         follows.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
-        toot.textAlignment = .center
         date.textAlignment = .center
         follows.titleLabel?.textAlignment = .center
         
@@ -487,28 +459,10 @@ class ProfileHeaderCellOwn2: SwipeTableViewCell {
         headerImageView.pin_setImage(from: URL(string: "\(status.header)"))
         headerImageView.layer.masksToBounds = true
         
-        userName.text = status.displayName
         userTag.text = "@\(status.acct)"
-        toot.text = status.note.stripHTML()
-        
-        
-        if status.emojis.isEmpty {
-            userName.text = status.displayName.stripHTML()
-        } else {
-            let attributedString = NSMutableAttributedString(string: status.displayName.stripHTML())
-            for y in status.emojis {
-                let textAttachment = NSTextAttachment()
-                textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.userName.font.lineHeight), height: Int(self.userName.font.lineHeight))
-                let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                while attributedString.mutableString.contains(":\(y.shortcode):") {
-                    let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                    attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                }
-            }
-            self.userName.attributedText = attributedString
-            self.reloadInputViews()
-        }
+        toot.attributedText = status.noteAsRichText(RichText.settingsProfile()) ?? RichText.failure
+        userName.attributedText = status.displayNameAsRichText(RichText.settingsDisplayNameProfile()) ?? RichText.failure
+        reloadInputViews()
         
         date.text = "Joined on \(status.createdAt.toString(dateStyle: .medium, timeStyle: .medium))"
         

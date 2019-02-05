@@ -170,10 +170,8 @@ class DetailCell: UITableViewCell {
             profileImageView.layer.cornerRadius = 0
         }
         
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         date.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
         fromClient.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         faves.titleLabel?.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         

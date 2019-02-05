@@ -368,10 +368,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.profileImageView.tag = indexPath.row
                 cell.profileImageView.addTarget(self, action: #selector(self.didTouchProfileP), for: .touchUpInside)
                 cell.backgroundColor = Colours.white
-                cell.userName.textColor = Colours.black
                 cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                 cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                cell.toot.textColor = Colours.black
                 cell.toot.handleURLTap { (url) in
                     // safari
                     if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
@@ -424,10 +422,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         cell.profileImageView.tag = indexPath.row
                         cell.profileImageView.addTarget(self, action: #selector(self.didTouchProfileP), for: .touchUpInside)
                         cell.backgroundColor = Colours.white
-                        cell.userName.textColor = Colours.black
                         cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                         cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                        cell.toot.textColor = Colours.black
                     cell.toot.handleMentionTap { (string) in
                         if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
                             let selection = UISelectionFeedbackGenerator()
@@ -509,10 +505,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         cell.mainImageView.addTarget(self, action: #selector(self.tappedImagePrev(_:)), for: .touchUpInside)
                         cell.mainImageView.tag = indexPath.row
                         cell.backgroundColor = Colours.white
-                        cell.userName.textColor = Colours.black
                         cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                         cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                        cell.toot.textColor = Colours.black
                         cell.mainImageView.backgroundColor = Colours.white
                     cell.toot.handleMentionTap { (string) in
                         if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
@@ -607,10 +601,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.profileImageView.tag = indexPath.row
                 cell.profileImageView.addTarget(self, action: #selector(self.didTouchProfileM), for: .touchUpInside)
                 cell.backgroundColor = Colours.white
-                cell.userName.textColor = Colours.black
                 cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                 cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                cell.toot.textColor = Colours.black
                 cell.fromClient.textColor = Colours.black.withAlphaComponent(0.6)
                 cell.faves.titleLabel?.textColor = Colours.tabSelected
                 cell.faves.setTitleColor(Colours.tabSelected, for: .normal)
@@ -697,10 +689,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.mainImageView.addTarget(self, action: #selector(self.tappedImageDetail(_:)), for: .touchUpInside)
                 cell.mainImageView.tag = indexPath.row
                 cell.backgroundColor = Colours.white
-                cell.userName.textColor = Colours.black
                 cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                 cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                cell.toot.textColor = Colours.black
                 cell.fromClient.textColor = Colours.black.withAlphaComponent(0.6)
                 cell.faves.titleLabel?.textColor = Colours.tabSelected
                 cell.faves.setTitleColor(Colours.tabSelected, for: .normal)
@@ -834,10 +824,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.profileImageView.tag = indexPath.row
                 cell.profileImageView.addTarget(self, action: #selector(self.didTouchProfile), for: .touchUpInside)
                 cell.backgroundColor = Colours.white
-                cell.userName.textColor = Colours.black
                 cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                 cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                cell.toot.textColor = Colours.black
                 cell.toot.handleURLTap { (url) in
                     // safari
                     if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
@@ -891,10 +879,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         cell.profileImageView.tag = indexPath.row
                         cell.profileImageView.addTarget(self, action: #selector(self.didTouchProfile), for: .touchUpInside)
                         cell.backgroundColor = Colours.white
-                        cell.userName.textColor = Colours.black
                         cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                         cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                        cell.toot.textColor = Colours.black
                         cell.toot.handleMentionTap { (string) in
                             if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
                                 let selection = UISelectionFeedbackGenerator()
@@ -973,10 +959,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         cell.profileImageView.tag = indexPath.row
                         cell.profileImageView.addTarget(self, action: #selector(self.didTouchProfile), for: .touchUpInside)
                         cell.backgroundColor = Colours.white
-                        cell.userName.textColor = Colours.black
                         cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                         cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                        cell.toot.textColor = Colours.black
                         cell.toot.handleMentionTap { (string) in
                             if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
                                 let selection = UISelectionFeedbackGenerator()
@@ -1061,10 +1045,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         cell.mainImageView.addTarget(self, action: #selector(self.tappedImage(_:)), for: .touchUpInside)
                         cell.mainImageView.tag = indexPath.row
                         cell.backgroundColor = Colours.white
-                        cell.userName.textColor = Colours.black
                         cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                         cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                        cell.toot.textColor = Colours.black
                         cell.mainImageView.backgroundColor = Colours.white
                         cell.toot.handleMentionTap { (string) in
                             if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
@@ -1146,10 +1128,8 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         cell.mainImageView.addTarget(self, action: #selector(self.tappedImage(_:)), for: .touchUpInside)
                         cell.mainImageView.tag = indexPath.row
                         cell.backgroundColor = Colours.white
-                        cell.userName.textColor = Colours.black
                         cell.userTag.textColor = Colours.black.withAlphaComponent(0.6)
                         cell.date.textColor = Colours.black.withAlphaComponent(0.6)
-                        cell.toot.textColor = Colours.black
                         cell.mainImageView.backgroundColor = Colours.white
                         cell.toot.handleMentionTap { (string) in
                             if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
@@ -1340,6 +1320,7 @@ class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDa
         StoreStruct.client.run(request) { (statuses) in
             if let stat = (statuses.value) {
                 DispatchQueue.main.async {
+                    guard self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) != nil else { return } // TODO(Vyr): this keeps crashing for unclear reasons
                     if stat.reblog?.mediaAttachments.isEmpty ?? stat.mediaAttachments.isEmpty || (UserDefaults.standard.object(forKey: "sensitiveToggle") != nil) && (UserDefaults.standard.object(forKey: "sensitiveToggle") as? Int == 1) {
                         let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! DetailCell
                         cell.configure(stat)

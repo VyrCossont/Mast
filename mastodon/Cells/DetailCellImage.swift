@@ -68,18 +68,14 @@ class DetailCellImage: UITableViewCell {
         fromClient.numberOfLines = 0
         faves.titleLabel?.textAlignment = .left
         
-        userName.textColor = Colours.black
         userTag.textColor = Colours.black.withAlphaComponent(0.6)
         date.textColor = Colours.black.withAlphaComponent(0.6)
-        toot.textColor = Colours.black
         fromClient.textColor = Colours.black.withAlphaComponent(0.6)
         faves.titleLabel?.textColor = Colours.tabSelected
         faves.setTitleColor(Colours.tabSelected, for: .normal)
         
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         date.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
         fromClient.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         faves.titleLabel?.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         

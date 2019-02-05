@@ -42,13 +42,9 @@ class FollowersCell: SwipeTableViewCell {
         userTag.numberOfLines = 0
         toot.numberOfLines = 0
         
-        userName.textColor = Colours.black
         userTag.textColor = Colours.black
-        toot.textColor = Colours.black.withAlphaComponent(0.6)
         
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize1)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         
         contentView.addSubview(profileImageView)
         contentView.addSubview(userName)
@@ -79,30 +75,11 @@ class FollowersCell: SwipeTableViewCell {
         } else {
             userTag.text = "\(status.displayName) @\(status.username)"
         }
-        toot.text = status.note.stripHTML()
-        
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize1)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        
-        
-        if status.emojis.isEmpty {
-            userName.text = status.displayName.stripHTML()
-        } else {
-            let attributedString = NSMutableAttributedString(string: status.displayName.stripHTML())
-            for y in status.emojis {
-                let textAttachment = NSTextAttachment()
-                textAttachment.loadImageUsingCache(withUrl: y.url.absoluteString)
-                textAttachment.bounds = CGRect(x:0, y: Int(-4), width: Int(self.userName.font.lineHeight), height: Int(self.userName.font.lineHeight))
-                let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-                while attributedString.mutableString.contains(":\(y.shortcode):") {
-                    let range: NSRange = (attributedString.mutableString as NSString).range(of: ":\(y.shortcode):")
-                    attributedString.replaceCharacters(in: range, with: attrStringWithImage)
-                }
-            }
-            self.userName.attributedText = attributedString
-            self.reloadInputViews()
-        }
+
+        toot.attributedText = status.noteAsRichText(RichText.settingsFollowers()) ?? RichText.failure
+        userName.attributedText = status.displayNameAsRichText() ?? RichText.failure
+        reloadInputViews()
         
         profileImageView.pin_setPlaceholder(with: UIImage(named: "logo"))
         profileImageView.pin_updateWithProgress = true

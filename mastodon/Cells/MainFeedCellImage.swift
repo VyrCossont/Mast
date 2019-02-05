@@ -91,16 +91,11 @@ class MainFeedCellImage: SwipeTableViewCell {
         userTag.numberOfLines = 0
         toot.numberOfLines = 0
         
-        userName.textColor = Colours.black
         userTag.textColor = Colours.black.withAlphaComponent(0.6)
         date.textColor = Colours.black.withAlphaComponent(0.6)
-        toot.textColor = Colours.black
-        
-        
-        userName.font = UIFont.boldSystemFont(ofSize: Colours.fontSize1)
+
         userTag.font = UIFont.systemFont(ofSize: Colours.fontSize3)
         date.font = UIFont.systemFont(ofSize: Colours.fontSize3)
-        toot.font = UIFont.systemFont(ofSize: Colours.fontSize1)
         
         
         toot.enabledTypes = [.mention, .hashtag, .url]
