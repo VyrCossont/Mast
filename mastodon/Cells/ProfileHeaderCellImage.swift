@@ -31,7 +31,7 @@ class ProfileHeaderCellImage: UITableViewCell, UICollectionViewDelegate, UIColle
         } else {
             collectionView = UICollectionView(frame: CGRect(x: CGFloat(0), y: CGFloat(-10), width: CGFloat(UIScreen.main.bounds.width), height: CGFloat(208)), collectionViewLayout: layout)
         }
-        collectionView.backgroundColor = Colours.clear
+        collectionView.backgroundColor = UIColor.clear
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
@@ -98,7 +98,7 @@ class ProfileHeaderCellImage: UITableViewCell, UICollectionViewDelegate, UIColle
             }
         }
         
-        cell.backgroundColor = Colours.clear
+        cell.backgroundColor = UIColor.clear
         
         return cell
     }

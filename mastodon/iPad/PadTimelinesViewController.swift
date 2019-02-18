@@ -743,10 +743,9 @@ class PadTimelinesViewController: UIViewController, SJFluidSegmentedControlDataS
         NotificationCenter.default.addObserver(self, selector: #selector(self.changeSeg), name: NSNotification.Name(rawValue: "changeSeg"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.segTheme), name: NSNotification.Name(rawValue: "segTheme"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loadagain), name: NSNotification.Name(rawValue: "light"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loadagain), name: NSNotification.Name(rawValue: "night"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loadagain), name: NSNotification.Name(rawValue: "night2"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.loadagain), name: NSNotification.Name(rawValue: "black"), object: nil)
+        for namedTheme in NamedTheme.allCases {
+            NotificationCenter.default.addObserver(self, selector: #selector(self.loadagain), name: namedTheme.notificationName, object: nil)
+        }
         
         self.view.backgroundColor = Colours.white
         

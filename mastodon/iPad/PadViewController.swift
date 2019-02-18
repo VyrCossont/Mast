@@ -594,41 +594,13 @@ class PadViewController: UIViewController, UITextFieldDelegate, OSSubscriptionOb
     
     var size9 = 961
     
-    func siriLight() {
-        UIApplication.shared.statusBarStyle = .default
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(0, forKey: "theme")
-        self.genericStuff()
+    func changeTheme(_ namedTheme: NamedTheme) {
+        UserDefaults.theme = namedTheme
+        DispatchQueue.main.async {
+            self.genericStuff()
+        }
     }
-    
-    func siriDark() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(1, forKey: "theme")
-        self.genericStuff()
-    }
-    
-    func siriDark2() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(2, forKey: "theme")
-        self.genericStuff()
-    }
-    
-    func siriOled() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(3, forKey: "theme")
-        self.genericStuff()
-    }
-    
-    func siriBlue() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(4, forKey: "theme")
-        self.genericStuff()
-    }
-    
+
     func gotoID() {
         
         if StoreStruct.currentPage == 0 {
@@ -642,6 +614,9 @@ class PadViewController: UIViewController, UITextFieldDelegate, OSSubscriptionOb
     }
     
     func genericStuff() {
+        UIApplication.shared.statusBarStyle = UserDefaults.theme.statusBarStyle
+        Colours.keyCol = UserDefaults.theme.keyboardAppearance
+        
         (self.rootNavigationController2.viewControllers[0] as! PadTimelinesViewController).loadLoadLoad()
         (self.rootNavigationController21.viewControllers[0] as! PadMentionsViewController).loadLoadLoad()
         (self.rootNavigationController5.viewControllers[0] as! ThirdViewController).loadLoadLoad()
@@ -738,10 +713,9 @@ class PadViewController: UIViewController, UITextFieldDelegate, OSSubscriptionOb
         NotificationCenter.default.addObserver(self, selector: #selector(self.signOutNewInstance), name: NSNotification.Name(rawValue: "signOut2"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.dismissThings), name: NSNotification.Name(rawValue: "dismissThings"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.logBackOut), name: NSNotification.Name(rawValue: "logBackOut"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeLight), name: NSNotification.Name(rawValue: "light"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeNight), name: NSNotification.Name(rawValue: "night"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeNight2), name: NSNotification.Name(rawValue: "night2"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeBlack), name: NSNotification.Name(rawValue: "black"), object: nil)
+        for namedTheme in NamedTheme.allCases {
+            NotificationCenter.default.addObserver(self, selector: #selector(self.changeThemeNotificationHandler), name: namedTheme.notificationName, object: nil)
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(self.setVC), name: NSNotification.Name(rawValue: "setVC"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.setVC2), name: NSNotification.Name(rawValue: "setVC2"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.becomeFirst), name: NSNotification.Name(rawValue: "becomeFirst"), object: nil)
@@ -920,97 +894,11 @@ class PadViewController: UIViewController, UITextFieldDelegate, OSSubscriptionOb
                     selection.impactOccurred()
                 }
                 
-                var newNum = 0
-                if UserDefaults.standard.object(forKey: "theme") == nil {
-                    newNum = 1
-                    UIApplication.shared.statusBarStyle = .lightContent
-                    Colours.keyCol = UIKeyboardAppearance.dark
-                } else {
-                    let z = UserDefaults.standard.object(forKey: "theme") as! Int
-                    if z == 0 {
-                        newNum = 1
-                        UIApplication.shared.statusBarStyle = .lightContent
-                        Colours.keyCol = UIKeyboardAppearance.dark
-                    }
-                    if z == 1 {
-                        newNum = 2
-                        UIApplication.shared.statusBarStyle = .lightContent
-                        Colours.keyCol = UIKeyboardAppearance.dark
-                    }
-                    if z == 2 {
-                        newNum = 3
-                        UIApplication.shared.statusBarStyle = .lightContent
-                        Colours.keyCol = UIKeyboardAppearance.dark
-                    }
-                    if z == 3 {
-                        newNum = 4
-                        UIApplication.shared.statusBarStyle = .lightContent
-                        Colours.keyCol = UIKeyboardAppearance.dark
-                    }
-                    if z == 4 {
-                        newNum = 0
-                        UIApplication.shared.statusBarStyle = .default
-                        Colours.keyCol = UIKeyboardAppearance.light
-                    }
-                }
-                
-                UserDefaults.standard.set(newNum, forKey: "theme")
-                
-                DispatchQueue.main.async {
-                    
-                    (self.rootNavigationController2.viewControllers[0] as! PadTimelinesViewController).loadLoadLoad()
-                    (self.rootNavigationController21.viewControllers[0] as! PadMentionsViewController).loadLoadLoad()
-                    (self.rootNavigationController5.viewControllers[0] as! ThirdViewController).loadLoadLoad()
-                    (self.rootNavigationController6.viewControllers[0] as! PinnedViewController).loadLoadLoad()
-                    (self.detailNavigationController6.viewControllers[0] as! LikedViewController).loadLoadLoad()
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                    
-                    self.splitViewController2.view.backgroundColor = Colours.white
-                    self.splitViewController31.view.backgroundColor = Colours.white
-                    self.rootNavigationController22.view.backgroundColor = Colours.white
-                    self.splitViewController21.view.backgroundColor = Colours.white
-                    self.splitViewController5.view.backgroundColor = Colours.white
-                    self.splitViewController6.view.backgroundColor = Colours.white
-                    self.rootNavigationController2.view.backgroundColor = Colours.white
-                    self.rootNavigationController21.view.backgroundColor = Colours.white
-                    self.rootNavigationController5.view.backgroundColor = Colours.white
-                    self.rootNavigationController6.view.backgroundColor = Colours.white
-                    self.detailNavigationController6.view.backgroundColor = Colours.white
-                    
-                    self.navigationController?.view.backgroundColor = Colours.white
-                    
-                    self.view.backgroundColor = Colours.white
-                    self.navigationController?.navigationBar.backgroundColor = Colours.white
-                    self.navigationController?.navigationBar.tintColor = Colours.black
-                    
-                    self.statusBarView.backgroundColor = Colours.white
-                    self.splitViewController?.view.backgroundColor = Colours.cellQuote
-                    
-                    
-                    self.load2()
-                    if self.curr == 0 {
-                        self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                        self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                        self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                        self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-                    } else if self.curr == 1 {
-                        self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                        self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                        self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                        self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-                    } else {
-                        self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                        self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                        self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                        self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-                    }
-                    
-                    
-                    
-                    
+                // Switch to next theme.
+                if let newTheme = NamedTheme(rawValue: (UserDefaults.theme.rawValue + 1) % NamedTheme.allCases.count) {
+                    changeTheme(newTheme)
                 }
             }
-            
         } else if (UserDefaults.standard.object(forKey: "longToggle") as! Int == 1) {
             //cback2
             if sender.state == .began {
@@ -1041,246 +929,10 @@ class PadViewController: UIViewController, UITextFieldDelegate, OSSubscriptionOb
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    @objc func themeLight() {
-        
-        UIApplication.shared.statusBarStyle = .default
-        Colours.keyCol = UIKeyboardAppearance.light
-        UserDefaults.standard.set(0, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            (self.rootNavigationController2.viewControllers[0] as! PadTimelinesViewController).loadLoadLoad()
-            (self.rootNavigationController21.viewControllers[0] as! PadMentionsViewController).loadLoadLoad()
-            (self.rootNavigationController5.viewControllers[0] as! ThirdViewController).loadLoadLoad()
-            (self.rootNavigationController6.viewControllers[0] as! PinnedViewController).loadLoadLoad()
-            (self.detailNavigationController6.viewControllers[0] as! LikedViewController).loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.splitViewController2.view.backgroundColor = Colours.white
-            self.splitViewController31.view.backgroundColor = Colours.white
-            self.rootNavigationController22.view.backgroundColor = Colours.white
-            self.splitViewController21.view.backgroundColor = Colours.white
-            self.splitViewController5.view.backgroundColor = Colours.white
-            self.splitViewController6.view.backgroundColor = Colours.white
-            self.rootNavigationController2.view.backgroundColor = Colours.white
-            self.rootNavigationController21.view.backgroundColor = Colours.white
-            self.rootNavigationController5.view.backgroundColor = Colours.white
-            self.rootNavigationController6.view.backgroundColor = Colours.white
-            self.detailNavigationController6.view.backgroundColor = Colours.white
-            
-            self.navigationController?.view.backgroundColor = Colours.white
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.black
-            
-            self.statusBarView.backgroundColor = Colours.white
-            self.splitViewController?.view.backgroundColor = Colours.cellQuote
-            
-            self.load2()
-            if self.curr == 0 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else if self.curr == 1 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            }
-            
+
+    @objc func changeThemeNotificationHandler(notification: NSNotification) {
+        if let namedTheme = NamedTheme(notificationName: notification.name) {
+            changeTheme(namedTheme)
         }
     }
-    
-    @objc func themeNight() {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        
-        UserDefaults.standard.set(1, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            (self.rootNavigationController2.viewControllers[0] as! PadTimelinesViewController).loadLoadLoad()
-            (self.rootNavigationController21.viewControllers[0] as! PadMentionsViewController).loadLoadLoad()
-            (self.rootNavigationController5.viewControllers[0] as! ThirdViewController).loadLoadLoad()
-            (self.rootNavigationController6.viewControllers[0] as! PinnedViewController).loadLoadLoad()
-            (self.detailNavigationController6.viewControllers[0] as! LikedViewController).loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.splitViewController2.view.backgroundColor = Colours.white
-            self.splitViewController31.view.backgroundColor = Colours.white
-            self.rootNavigationController22.view.backgroundColor = Colours.white
-            self.splitViewController21.view.backgroundColor = Colours.white
-            self.splitViewController5.view.backgroundColor = Colours.white
-            self.splitViewController6.view.backgroundColor = Colours.white
-            self.rootNavigationController2.view.backgroundColor = Colours.white
-            self.rootNavigationController21.view.backgroundColor = Colours.white
-            self.rootNavigationController5.view.backgroundColor = Colours.white
-            self.rootNavigationController6.view.backgroundColor = Colours.white
-            self.detailNavigationController6.view.backgroundColor = Colours.white
-            
-            self.navigationController?.view.backgroundColor = Colours.white
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.black
-            
-            
-            self.statusBarView.backgroundColor = Colours.white
-            self.splitViewController?.view.backgroundColor = Colours.cellQuote
-            
-            self.load2()
-            if self.curr == 0 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else if self.curr == 1 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            }
-            
-        }
-    }
-    
-    @objc func themeNight2() {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        
-        UserDefaults.standard.set(2, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            (self.rootNavigationController2.viewControllers[0] as! PadTimelinesViewController).loadLoadLoad()
-            (self.rootNavigationController21.viewControllers[0] as! PadMentionsViewController).loadLoadLoad()
-            (self.rootNavigationController5.viewControllers[0] as! ThirdViewController).loadLoadLoad()
-            (self.rootNavigationController6.viewControllers[0] as! PinnedViewController).loadLoadLoad()
-            (self.detailNavigationController6.viewControllers[0] as! LikedViewController).loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.splitViewController2.view.backgroundColor = Colours.white
-            self.splitViewController31.view.backgroundColor = Colours.white
-            self.rootNavigationController22.view.backgroundColor = Colours.white
-            self.splitViewController21.view.backgroundColor = Colours.white
-            self.splitViewController5.view.backgroundColor = Colours.white
-            self.splitViewController6.view.backgroundColor = Colours.white
-            self.rootNavigationController2.view.backgroundColor = Colours.white
-            self.rootNavigationController21.view.backgroundColor = Colours.white
-            self.rootNavigationController5.view.backgroundColor = Colours.white
-            self.rootNavigationController6.view.backgroundColor = Colours.white
-            self.detailNavigationController6.view.backgroundColor = Colours.white
-            
-            self.navigationController?.view.backgroundColor = Colours.white
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.black
-            
-            
-            self.statusBarView.backgroundColor = Colours.white
-            self.splitViewController?.view.backgroundColor = Colours.cellQuote
-            
-            self.load2()
-            if self.curr == 0 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else if self.curr == 1 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            }
-            
-        }
-    }
-    
-    @objc func themeBlack() {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        
-        UserDefaults.standard.set(3, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            (self.rootNavigationController2.viewControllers[0] as! PadTimelinesViewController).loadLoadLoad()
-            (self.rootNavigationController21.viewControllers[0] as! PadMentionsViewController).loadLoadLoad()
-            (self.rootNavigationController5.viewControllers[0] as! ThirdViewController).loadLoadLoad()
-            (self.rootNavigationController6.viewControllers[0] as! PinnedViewController).loadLoadLoad()
-            (self.detailNavigationController6.viewControllers[0] as! LikedViewController).loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.splitViewController2.view.backgroundColor = Colours.white
-            self.splitViewController31.view.backgroundColor = Colours.white
-            self.rootNavigationController22.view.backgroundColor = Colours.white
-            self.splitViewController21.view.backgroundColor = Colours.white
-            self.splitViewController5.view.backgroundColor = Colours.white
-            self.splitViewController6.view.backgroundColor = Colours.white
-            self.rootNavigationController2.view.backgroundColor = Colours.white
-            self.rootNavigationController21.view.backgroundColor = Colours.white
-            self.rootNavigationController5.view.backgroundColor = Colours.white
-            self.rootNavigationController6.view.backgroundColor = Colours.white
-            self.detailNavigationController6.view.backgroundColor = Colours.white
-            
-            self.navigationController?.view.backgroundColor = Colours.white
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.black
-            
-            self.statusBarView.backgroundColor = Colours.white
-            self.splitViewController?.view.backgroundColor = Colours.cellQuote
-            
-            self.load2()
-            if self.curr == 0 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else if self.curr == 1 {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            } else {
-                self.button1.setImage(UIImage(named: "feed")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button2.setImage(UIImage(named: "notifications")?.maskWithColor(color: self.unselectCol), for: .normal)
-                self.button3.setImage(UIImage(named: "profile")?.maskWithColor(color: Colours.tabSelected), for: .normal)
-                self.button4.setImage(UIImage(named: "search2")?.maskWithColor(color: self.unselectCol), for: .normal)
-            }
-            
-        }
-    }
-    
-    
 }

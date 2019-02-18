@@ -850,7 +850,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             }
             self.textView.becomeFirstResponder()
             springWithDelay(duration: 0.6, delay: 0, animations: {
-                self.bgView.backgroundColor = Colours.clear
+                self.bgView.backgroundColor = UIColor.clear
                 self.removeLabel.alpha = 0
             })
         } else {
@@ -897,7 +897,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             }
             self.textView.becomeFirstResponder()
             springWithDelay(duration: 0.6, delay: 0, animations: {
-                self.bgView.backgroundColor = Colours.clear
+                self.bgView.backgroundColor = UIColor.clear
                 self.removeLabel.alpha = 0
             })
         } else {
@@ -942,7 +942,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             }
             self.textView.becomeFirstResponder()
             springWithDelay(duration: 0.6, delay: 0, animations: {
-                self.bgView.backgroundColor = Colours.clear
+                self.bgView.backgroundColor = UIColor.clear
                 self.removeLabel.alpha = 0
             })
         } else {
@@ -984,7 +984,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             }
             self.textView.becomeFirstResponder()
             springWithDelay(duration: 0.6, delay: 0, animations: {
-                self.bgView.backgroundColor = Colours.clear
+                self.bgView.backgroundColor = UIColor.clear
                 self.removeLabel.alpha = 0
             })
         } else {
@@ -1061,7 +1061,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         // images
         
         self.selectedImage1.frame = CGRect(x:15, y:Int(self.view.bounds.height) - 50 - Int(self.keyHeight) - 55, width: 40, height: 40)
-        self.selectedImage1.backgroundColor = Colours.clear
+        self.selectedImage1.backgroundColor = UIColor.clear
         self.selectedImage1.layer.cornerRadius = 8
         self.selectedImage1.layer.masksToBounds = true
         self.selectedImage1.contentMode = .scaleAspectFill
@@ -1073,7 +1073,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         self.view.addSubview(self.selectedImage1)
         
         self.selectedImage2.frame = CGRect(x:70, y:Int(self.view.bounds.height) - 50 - Int(self.keyHeight) - 55, width: 40, height: 40)
-        self.selectedImage2.backgroundColor = Colours.clear
+        self.selectedImage2.backgroundColor = UIColor.clear
         self.selectedImage2.layer.cornerRadius = 8
         self.selectedImage2.layer.masksToBounds = true
         self.selectedImage2.contentMode = .scaleAspectFill
@@ -1085,7 +1085,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         self.view.addSubview(self.selectedImage2)
         
         self.selectedImage3.frame = CGRect(x:125, y:Int(self.view.bounds.height) - 50 - Int(self.keyHeight) - 55, width: 40, height: 40)
-        self.selectedImage3.backgroundColor = Colours.clear
+        self.selectedImage3.backgroundColor = UIColor.clear
         self.selectedImage3.layer.cornerRadius = 8
         self.selectedImage3.layer.masksToBounds = true
         self.selectedImage3.contentMode = .scaleAspectFill
@@ -1097,7 +1097,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         self.view.addSubview(self.selectedImage3)
         
         self.selectedImage4.frame = CGRect(x:180, y:Int(self.view.bounds.height) - 50 - Int(self.keyHeight) - 55, width: 40, height: 40)
-        self.selectedImage4.backgroundColor = Colours.clear
+        self.selectedImage4.backgroundColor = UIColor.clear
         self.selectedImage4.layer.cornerRadius = 8
         self.selectedImage4.layer.masksToBounds = true
         self.selectedImage4.contentMode = .scaleAspectFill
@@ -1225,8 +1225,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .singleLine
-        self.tableView.backgroundColor = Colours.clear
-        self.tableView.separatorColor = Colours.clear
+        self.tableView.backgroundColor = UIColor.clear
+        self.tableView.separatorColor = UIColor.clear
         self.tableView.layer.masksToBounds = true
         self.tableView.estimatedRowHeight = 89
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -1244,8 +1244,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         self.tableViewDrafts.delegate = self
         self.tableViewDrafts.dataSource = self
         self.tableViewDrafts.separatorStyle = .singleLine
-        self.tableViewDrafts.backgroundColor = Colours.clear
-        self.tableViewDrafts.separatorColor = Colours.clear
+        self.tableViewDrafts.backgroundColor = UIColor.clear
+        self.tableViewDrafts.separatorColor = UIColor.clear
         self.tableViewDrafts.layer.masksToBounds = true
         self.tableViewDrafts.estimatedRowHeight = 89
         self.tableViewDrafts.rowHeight = UITableView.automaticDimension
@@ -1258,8 +1258,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         self.tableViewASCII.delegate = self
         self.tableViewASCII.dataSource = self
         self.tableViewASCII.separatorStyle = .singleLine
-        self.tableViewASCII.backgroundColor = Colours.clear
-        self.tableViewASCII.separatorColor = Colours.clear
+        self.tableViewASCII.backgroundColor = UIColor.clear
+        self.tableViewASCII.separatorColor = UIColor.clear
         self.tableViewASCII.layer.masksToBounds = true
         self.tableViewASCII.estimatedRowHeight = 89
         self.tableViewASCII.rowHeight = UITableView.automaticDimension
@@ -1273,8 +1273,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         self.tableViewEmoti.delegate = self
         self.tableViewEmoti.dataSource = self
         self.tableViewEmoti.separatorStyle = .singleLine
-        self.tableViewEmoti.backgroundColor = Colours.clear
-        self.tableViewEmoti.separatorColor = Colours.clear
+        self.tableViewEmoti.backgroundColor = UIColor.clear
+        self.tableViewEmoti.separatorColor = UIColor.clear
         self.tableViewEmoti.layer.masksToBounds = true
         self.tableViewEmoti.estimatedRowHeight = 89
         self.tableViewEmoti.rowHeight = UITableView.automaticDimension
@@ -1381,7 +1381,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             cameraCollectionView = UICollectionView(frame: CGRect(x: CGFloat(0), y: CGFloat(50), width: CGFloat(UIScreen.main.bounds.width), height: CGFloat(210)), collectionViewLayout: layout)
         }
         
-        cameraCollectionView.backgroundColor = Colours.clear
+        cameraCollectionView.backgroundColor = UIColor.clear
         cameraCollectionView.delegate = self
         cameraCollectionView.dataSource = self
         cameraCollectionView.showsHorizontalScrollIndicator = false
@@ -1478,7 +1478,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         }
         textView.autocorrectionType = .yes
         textView.keyboardAppearance = Colours.keyCol
-        textView.backgroundColor = Colours.clear
+        textView.backgroundColor = UIColor.clear
         textView.textColor = Colours.grayDark
         
         //bhere6
@@ -1550,11 +1550,11 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
         cell.bgImage.layer.shadowRadius = 12
         cell.bgImage.layer.shadowOpacity = 0.22
         
-        cell.backgroundColor = Colours.clear
+        cell.backgroundColor = UIColor.clear
         
         return cell
         } else {
-            cell.backgroundColor = Colours.clear
+            cell.backgroundColor = UIColor.clear
             
             return cell
         }
@@ -3447,12 +3447,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellfolfol", for: indexPath) as! FollowersCell
             cell.configure(StoreStruct.statusSearchUser[indexPath.row])
             cell.profileImageView.tag = indexPath.row
-            cell.backgroundColor = Colours.clear
+            cell.backgroundColor = UIColor.clear
             cell.userName.textColor = UIColor.white
             cell.userTag.textColor = UIColor.white
             cell.toot.textColor = UIColor.white.withAlphaComponent(0.6)
             let bgColorView = UIView()
-            bgColorView.backgroundColor = Colours.clear
+            bgColorView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = bgColorView
             return cell
             
@@ -3464,12 +3464,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             cell.textLabel?.textAlignment = .left
             
                 let backgroundView = UIView()
-                backgroundView.backgroundColor = Colours.clear
+                backgroundView.backgroundColor = UIColor.clear
                 cell.selectedBackgroundView = backgroundView
             
             cell.textLabel?.textColor = UIColor.white
             cell.textLabel?.numberOfLines = 0
-            cell.backgroundColor = Colours.clear
+            cell.backgroundColor = UIColor.clear
             return cell
             
         } else if tableView == self.tableViewEmoti {
@@ -3484,12 +3484,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
             cell.textLabel?.textAlignment = .left
             
             let backgroundView = UIView()
-            backgroundView.backgroundColor = Colours.clear
+            backgroundView.backgroundColor = UIColor.clear
             cell.selectedBackgroundView = backgroundView
             
             cell.textLabel?.textColor = UIColor.white
             cell.textLabel?.numberOfLines = 0
-            cell.backgroundColor = Colours.clear
+            cell.backgroundColor = UIColor.clear
             return cell
             
         } else {
@@ -3504,12 +3504,12 @@ class ComposeViewController: UIViewController, UITextViewDelegate, UICollectionV
                 cell.textLabel?.textAlignment = .left
                 
                 let backgroundView = UIView()
-                backgroundView.backgroundColor = Colours.clear
+                backgroundView.backgroundColor = UIColor.clear
                 cell.selectedBackgroundView = backgroundView
             }
             cell.textLabel?.textColor = UIColor.white
             cell.textLabel?.numberOfLines = 0
-            cell.backgroundColor = Colours.clear
+            cell.backgroundColor = UIColor.clear
             return cell
         }
     }

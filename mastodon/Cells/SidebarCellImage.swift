@@ -39,8 +39,8 @@ class SidebarCellImage: SwipeTableViewCell {
         
         profileImageView.backgroundColor = Colours.white
         typeImage.backgroundColor = Colours.white
-        moreImage.backgroundColor = Colours.clear
-        warningB.backgroundColor = Colours.clear
+        moreImage.backgroundColor = UIColor.clear
+        warningB.backgroundColor = UIColor.clear
         
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         typeImage.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +121,7 @@ class SidebarCellImage: SwipeTableViewCell {
         contentView.addSubview(toot)
         contentView.addSubview(moreImage)
         
-        imageCountTag.backgroundColor = Colours.clear
+        imageCountTag.backgroundColor = UIColor.clear
         imageCountTag.translatesAutoresizingMaskIntoConstraints = false
         imageCountTag.layer.cornerRadius = 7
         imageCountTag.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
@@ -482,7 +482,7 @@ class SidebarCellImage: SwipeTableViewCell {
             imageCountTag.backgroundColor = Colours.tabSelected
             imageCountTag.alpha = 1
         } else {
-            imageCountTag.backgroundColor = Colours.clear
+            imageCountTag.backgroundColor = UIColor.clear
             imageCountTag.alpha = 0
         }
         
@@ -502,12 +502,12 @@ class SidebarCellImage: SwipeTableViewCell {
                 warningB.addTarget(self, action: #selector(self.didTouchWarning), for: .touchUpInside)
                 warningB.alpha = 1
             } else {
-                warningB.backgroundColor = Colours.clear
+                warningB.backgroundColor = UIColor.clear
                 warningB.alpha = 0
             }
             
         } else {
-            warningB.backgroundColor = Colours.clear
+            warningB.backgroundColor = UIColor.clear
             warningB.alpha = 0
         }
         
@@ -515,7 +515,7 @@ class SidebarCellImage: SwipeTableViewCell {
     }
     
     @objc func didTouchWarning() {
-        warningB.backgroundColor = Colours.clear
+        warningB.backgroundColor = UIColor.clear
         warningB.alpha = 0
         
         if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {

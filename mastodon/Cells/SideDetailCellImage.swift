@@ -104,7 +104,7 @@ class SideDetailCellImage: UITableViewCell {
         contentView.addSubview(fromClient)
         contentView.addSubview(faves)
         
-        imageCountTag.backgroundColor = Colours.clear
+        imageCountTag.backgroundColor = UIColor.clear
         imageCountTag.translatesAutoresizingMaskIntoConstraints = false
         imageCountTag.layer.cornerRadius = 7
         imageCountTag.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
@@ -336,7 +336,7 @@ class SideDetailCellImage: UITableViewCell {
             imageCountTag.backgroundColor = Colours.tabSelected
             imageCountTag.alpha = 1
         } else {
-            imageCountTag.backgroundColor = Colours.clear
+            imageCountTag.backgroundColor = UIColor.clear
             imageCountTag.alpha = 0
         }
         

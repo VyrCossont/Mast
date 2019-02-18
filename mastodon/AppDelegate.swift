@@ -49,21 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if userActivity.activityType == "com.shi.Mast.confetti" {
             let viewController = window?.rootViewController as! ViewController
             viewController.siriConfetti()
-        } else if userActivity.activityType == "com.shi.Mast.light" {
+        } else if let namedTheme = NamedTheme(activityType: userActivity.activityType) {
             let viewController = window?.rootViewController as! ViewController
-            viewController.siriLight()
-        } else if userActivity.activityType == "com.shi.Mast.dark" {
-            let viewController = window?.rootViewController as! ViewController
-            viewController.siriDark()
-        } else if userActivity.activityType == "com.shi.Mast.dark2" {
-            let viewController = window?.rootViewController as! ViewController
-            viewController.siriDark2()
-        } else if userActivity.activityType == "com.shi.Mast.bluemid" {
-            let viewController = window?.rootViewController as! ViewController
-            viewController.siriBlue()
-        } else {
-            let viewController = window?.rootViewController as! ViewController
-            viewController.siriOled()
+            viewController.changeTheme(namedTheme)
         }
         return true
     }
@@ -179,35 +167,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            if url.host == "light" {
+            if let urlHost = url.host, let namedTheme = NamedTheme(urlHost: urlHost) {
                 let viewController0 = window?.rootViewController as! UISplitViewController
                 let viewController = viewController0.viewControllers[0] as! PadViewController
-                viewController.siriLight()
-                return true
-            } else if url.host == "dark" {
-                let viewController0 = window?.rootViewController as! UISplitViewController
-                let viewController = viewController0.viewControllers[0] as! PadViewController
-                viewController.siriDark()
-                return true
-            } else if url.host == "darker" {
-                let viewController0 = window?.rootViewController as! UISplitViewController
-                let viewController = viewController0.viewControllers[0] as! PadViewController
-                viewController.siriDark2()
-                return true
-            } else if url.host == "black" {
-                let viewController0 = window?.rootViewController as! UISplitViewController
-                let viewController = viewController0.viewControllers[0] as! PadViewController
-                viewController.siriOled()
-                return true
-            } else if url.host == "blue" {
-                let viewController0 = window?.rootViewController as! UISplitViewController
-                let viewController = viewController0.viewControllers[0] as! PadViewController
-                viewController.siriBlue()
-                return true
-            } else if url.host == "confetti" {
-                let viewController0 = window?.rootViewController as! UISplitViewController
-                let viewController = viewController0.viewControllers[0] as! PadViewController
-                viewController.siriConfetti()
+                viewController.changeTheme(namedTheme)
                 return true
             } else if url.host == "onboard" {
 //                let viewController = window?.rootViewController as! PadViewController
@@ -270,25 +233,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
         } else {
-            if url.host == "light" {
+            if let urlHost = url.host, let namedTheme = NamedTheme(urlHost: urlHost) {
                 let viewController = window?.rootViewController as! ViewController
-                viewController.siriLight()
-                return true
-            } else if url.host == "dark" {
-                let viewController = window?.rootViewController as! ViewController
-                viewController.siriDark()
-                return true
-            } else if url.host == "darker" {
-                let viewController = window?.rootViewController as! ViewController
-                viewController.siriDark2()
-                return true
-            } else if url.host == "black" {
-                let viewController = window?.rootViewController as! ViewController
-                viewController.siriOled()
-                return true
-            } else if url.host == "blue" {
-                let viewController = window?.rootViewController as! ViewController
-                viewController.siriBlue()
+                viewController.changeTheme(namedTheme)
                 return true
             } else if url.host == "confetti" {
                 let viewController = window?.rootViewController as! ViewController

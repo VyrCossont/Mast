@@ -356,7 +356,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     var generalArrayIm = ["setreal", "notifs", "sethap", "setsensitivec", "priv", "keybse", "holdse", "comse", "posse", "setvid", "swipeact", "swipeact3", "actdef", "setgraph", "setgraph2", "like", "boost", "setshake", "segse", "searchscope", "keyhap", "jumptop"]
     
     var appearanceArray = ["", "Theme", "Text Size", "Profiles Corner Radius", "Images Corner Radius", "Hide Images in Timelines", "Full Usernames", "Confetti", "Gallery Grid Size", "Time Style", "Profile Header Background", "Segments Size", "Segments Transition Style", "Subtle Activity Notifications", "Profile Display Picture Border", "Pinch and History View Background Theme", "Media Captions", "Toot Progress Indicator", "Highlight Direct Messages", "Toot Bar Hue", "Activity Graph Hue", "Segments Hue", "Instances and Lists Icon", "Profile Display Picture in Toot Composition", "Popup Alerts"]
-    var appearanceArrayDesc = ["", "Select from a white day theme, a dark dusk theme, an even darker night theme, or a truly black OLED-friendly theme.", "Always be able to read posts with adjustable text sizing.", "Circle or square, your choice.", "Rounded or not, your choice.", "Timelines with some plain old text, for a distraction-free browsing experience.", "Display the user's full username, with the instance, in toots.", "Add some fun to posting toots, following users, boosting toots, and liking toots.", "Set the amount of columns in the toot composition section's photo picker gallery.", "Pick between absolute or relative time to display in timelines.", "Change the style of the profile header background.", "Choose from larger home and notification screen segments, or tinier ones.", "Pick between a static and linear transition, or a playful liquid one.", "Dims activity notifications, while keeping mentions untouched.", "Select a size for the border around profile view display pictures.", "Select a theme for the background when pinching to toot a screenshot, or when long-holding a back button to enter the history view.", "Pick whether to display the toot text or the image's alt text in media captions.", "Choose whether to show the toot progress indicator or not.", "Highlight direct messages in timelines with a subtle, distinct, or theme background.", "Select the hue for the keyboard bar when composing toots.", "Select the hue for the activity graph columns.", "Select the hue for segments. This may require restarting the app to take effect.", "Select an icon to use for the top-left instances and list section icon.", "Choose whether to display the current account's display picture in the top-left when composing toots.", "Pick whether to display popup alerts for a variety of actions including tooting, liking, and boosting."]
+    // TODO(Vyr): make NamedTheme aware
+    var appearanceArrayDesc = ["", "Select from a white day theme, a dark dusk theme, an even darker night theme, a truly black OLED-friendly theme, or a midnight blue theme.", "Always be able to read posts with adjustable text sizing.", "Circle or square, your choice.", "Rounded or not, your choice.", "Timelines with some plain old text, for a distraction-free browsing experience.", "Display the user's full username, with the instance, in toots.", "Add some fun to posting toots, following users, boosting toots, and liking toots.", "Set the amount of columns in the toot composition section's photo picker gallery.", "Pick between absolute or relative time to display in timelines.", "Change the style of the profile header background.", "Choose from larger home and notification screen segments, or tinier ones.", "Pick between a static and linear transition, or a playful liquid one.", "Dims activity notifications, while keeping mentions untouched.", "Select a size for the border around profile view display pictures.", "Select a theme for the background when pinching to toot a screenshot, or when long-holding a back button to enter the history view.", "Pick whether to display the toot text or the image's alt text in media captions.", "Choose whether to show the toot progress indicator or not.", "Highlight direct messages in timelines with a subtle, distinct, or theme background.", "Select the hue for the keyboard bar when composing toots.", "Select the hue for the activity graph columns.", "Select the hue for segments. This may require restarting the app to take effect.", "Select an icon to use for the top-left instances and list section icon.", "Choose whether to display the current account's display picture in the top-left when composing toots.", "Pick whether to display popup alerts for a variety of actions including tooting, liking, and boosting."]
     var appearanceArrayIm = ["", "setnight", "settext", "setpro", "setima", "setima2", "userat", "confett", "gridse", "timese", "headbgse", "segse", "segse2", "subtleno" , "bordset", "pinchset", "heavyse", "indic", "direct2", "barcol", "acthue", "seghue", "barcol10", "compav", "popupset"]
     
     var bioArray = ["Lock App", "Lock Notifications"]
@@ -1076,7 +1077,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         
-        
+        // TODO(Vyr): replace all filledSetN images with references to these
+        let unfilledSet = UIImage(named: "unfilledset")
+        let filledSet = UIImage(named: "filledset")
         
         if indexPath.section == 1 {
             if indexPath.row == 4 {
@@ -1749,70 +1752,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             if indexPath.row == 1 {
                 // theme
                 
-                var filledSet1 = UIImage(named: "unfilledset")
-                var filledSet2 = UIImage(named: "unfilledset")
-                var filledSet3 = UIImage(named: "unfilledset")
-                var filledSet4 = UIImage(named: "unfilledset")
-                var filledSet5 = UIImage(named: "unfilledset")
-                if (UserDefaults.standard.object(forKey: "theme") == nil) || (UserDefaults.standard.object(forKey: "theme") as! Int == 0) {
-                    filledSet1 = UIImage(named: "filledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "theme") as! Int == 1) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "filledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "theme") as! Int == 2) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "filledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "theme") as! Int == 3) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "filledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "theme") as! Int == 4) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "filledset")
-                }
-                
-                
-                Alertift.actionSheet(title: title, message: nil)
+                var actionSheet = Alertift.actionSheet(title: title, message: nil)
                     .backgroundColor(Colours.white)
                     .titleTextColor(Colours.grayDark)
                     .messageTextColor(Colours.grayDark.withAlphaComponent(0.8))
                     .messageTextAlignment(.left)
                     .titleTextAlignment(.left)
-                    .action(.default("Day".localized), image: filledSet1) { (action, ind) in
+                for namedTheme in NamedTheme.allCases {
+                    let image = UserDefaults.theme == namedTheme ? filledSet : unfilledSet
+                    actionSheet = actionSheet.action(.default(namedTheme.name.localized), image: image) { (action, ind) in
                         print(action, ind)
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "light"), object: self)
+                        NotificationCenter.default.post(name: namedTheme.notificationName, object: self)
                     }
-                    .action(.default("Dusk".localized), image: filledSet2) { (action, ind) in
-                        print(action, ind)
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "night"), object: self)
-                    }
-                    .action(.default("Night".localized), image: filledSet3) { (action, ind) in
-                        print(action, ind)
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "night2"), object: self)
-                    }
-                    .action(.default("Midnight".localized), image: filledSet4) { (action, ind) in
-                        print(action, ind)
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "black"), object: self)
-                    }
-                    .action(.default("Midnight Blue".localized), image: filledSet5) { (action, ind) in
-                        print(action, ind)
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "midblue"), object: self)
-                    }
+                }
+                actionSheet
                     .action(.cancel("Dismiss"))
                     .finally { action, index in
                         if action.style == .cancel {
@@ -1825,143 +1778,27 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             if indexPath.row == 2 {
                 // text size
                 
-                
-                var filledSet1 = UIImage(named: "unfilledset")
-                var filledSet2 = UIImage(named: "unfilledset")
-                var filledSet3 = UIImage(named: "unfilledset")
-                var filledSet4 = UIImage(named: "unfilledset")
-                var filledSet5 = UIImage(named: "unfilledset")
-                var filledSet6 = UIImage(named: "unfilledset")
-                var filledSet7 = UIImage(named: "unfilledset")
-                var filledSet8 = UIImage(named: "unfilledset")
-                if (UserDefaults.standard.object(forKey: "systemText") == nil) || (UserDefaults.standard.object(forKey: "systemText") as! Int == 0) {
-                    filledSet1 = UIImage(named: "filledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                    filledSet6 = UIImage(named: "unfilledset")
-                    filledSet7 = UIImage(named: "unfilledset")
-                    filledSet8 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "fontSize") as! Int == 0) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "filledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                    filledSet6 = UIImage(named: "unfilledset")
-                    filledSet7 = UIImage(named: "unfilledset")
-                    filledSet8 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "fontSize") as! Int == 1) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "filledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                    filledSet6 = UIImage(named: "unfilledset")
-                    filledSet7 = UIImage(named: "unfilledset")
-                    filledSet8 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "fontSize") as! Int == 2) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "filledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                    filledSet6 = UIImage(named: "unfilledset")
-                    filledSet7 = UIImage(named: "unfilledset")
-                    filledSet8 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "fontSize") as! Int == 3) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "filledset")
-                    filledSet6 = UIImage(named: "unfilledset")
-                    filledSet7 = UIImage(named: "unfilledset")
-                    filledSet8 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "fontSize") as! Int == 4) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                    filledSet6 = UIImage(named: "filledset")
-                    filledSet7 = UIImage(named: "unfilledset")
-                    filledSet8 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "fontSize") as! Int == 5) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                    filledSet6 = UIImage(named: "unfilledset")
-                    filledSet7 = UIImage(named: "filledset")
-                    filledSet8 = UIImage(named: "unfilledset")
-                } else if (UserDefaults.standard.object(forKey: "fontSize") as! Int == 6) {
-                    filledSet1 = UIImage(named: "unfilledset")
-                    filledSet2 = UIImage(named: "unfilledset")
-                    filledSet3 = UIImage(named: "unfilledset")
-                    filledSet4 = UIImage(named: "unfilledset")
-                    filledSet5 = UIImage(named: "unfilledset")
-                    filledSet6 = UIImage(named: "unfilledset")
-                    filledSet7 = UIImage(named: "unfilledset")
-                    filledSet8 = UIImage(named: "filledset")
-                }
-                
-                
-                Alertift.actionSheet(title: title, message: nil)
+                var actionSheet = Alertift.actionSheet(title: title, message: nil)
                     .backgroundColor(Colours.white)
                     .titleTextColor(Colours.grayDark)
                     .messageTextColor(Colours.grayDark.withAlphaComponent(0.8))
                     .messageTextAlignment(.left)
                     .titleTextAlignment(.left)
-                    .action(.default("System Text Size".localized), image: filledSet1) { (action, ind) in
+                    .action(.default("System Text Size".localized), image: UserDefaults.systemText ? filledSet : unfilledSet) { (action, ind) in
                         print(action, ind)
-                        UserDefaults.standard.set(0, forKey: "systemText")
+                        UserDefaults.systemText = true
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
                     }
-                    .action(.default("8 Points".localized), image: filledSet2) { (action, ind) in
+                for fontSize in UserDefaults.fontSizeMin...UserDefaults.fontSizeMax {
+                    let image = (!UserDefaults.systemText && fontSize == UserDefaults.fontSize) ? filledSet : unfilledSet
+                    actionSheet = actionSheet.action(.default("\(fontSize) Points".localized), image: image) { (action, ind) in
                         print(action, ind)
-                        UserDefaults.standard.set(1, forKey: "systemText")
-                        UserDefaults.standard.set(0, forKey: "fontSize")
+                        UserDefaults.systemText = false
+                        UserDefaults.fontSize = fontSize
                         NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
                     }
-                    .action(.default("9 Points".localized), image: filledSet3) { (action, ind) in
-                        print(action, ind)
-                        UserDefaults.standard.set(1, forKey: "systemText")
-                        UserDefaults.standard.set(1, forKey: "fontSize")
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                    }
-                    .action(.default("10 Points".localized), image: filledSet4) { (action, ind) in
-                        print(action, ind)
-                        UserDefaults.standard.set(1, forKey: "systemText")
-                        UserDefaults.standard.set(2, forKey: "fontSize")
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                    }
-                    .action(.default("11 Points".localized), image: filledSet5) { (action, ind) in
-                        print(action, ind)
-                        UserDefaults.standard.set(1, forKey: "systemText")
-                        UserDefaults.standard.set(3, forKey: "fontSize")
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                    }
-                    .action(.default("12 Points".localized), image: filledSet6) { (action, ind) in
-                        print(action, ind)
-                        UserDefaults.standard.set(1, forKey: "systemText")
-                        UserDefaults.standard.set(4, forKey: "fontSize")
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                    }
-                    .action(.default("13 Points".localized), image: filledSet7) { (action, ind) in
-                        print(action, ind)
-                        UserDefaults.standard.set(1, forKey: "systemText")
-                        UserDefaults.standard.set(5, forKey: "fontSize")
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                    }
-                    .action(.default("14 Points".localized), image: filledSet8) { (action, ind) in
-                        print(action, ind)
-                        UserDefaults.standard.set(1, forKey: "systemText")
-                        UserDefaults.standard.set(6, forKey: "fontSize")
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                    }
+                }
+                actionSheet
                     .action(.cancel("Dismiss"))
                     .finally { action, index in
                         if action.style == .cancel {
@@ -2778,6 +2615,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             }
             if indexPath.row == 3 {
                 // schemes
+                // TODO(Vyr): make NamedTheme aware
                 Alertift.actionSheet(title: nil, message: "com.shi.mastodon://light : Switch to the light white theme\n\ncom.shi.mastodon://dark : Switch to the dark theme\n\ncom.shi.mastodon://darker : Switch to the darker theme\n\ncom.shi.mastodon://black : Switch to the black OLED theme\n\ncom.shi.mastodon://blue : Switch to the midnight blue theme\n\ncom.shi.mastodon://confetti : Make it rain confetti\n\ncom.shi.mastodon://onboard : Present the onboarding pop-up again\n\ncom.shi.mastodon://home : Switch to the home tab\n\ncom.shi.mastodon://mentions : Switch to the mentions tab\n\ncom.shi.mastodon://profile : Switch to the profile tab\n\ncom.shi.mastodon://toot : Present the toot composer screen\n\ncom.shi.mastodon://id=123 : Go to a toot with the ID 123")
                     .backgroundColor(Colours.white)
                     .titleTextColor(Colours.grayDark)

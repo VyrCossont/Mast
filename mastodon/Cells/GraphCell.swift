@@ -104,7 +104,7 @@ class GraphCell: UITableViewCell, ScrollableGraphViewDataSource {
         
         referenceLines.dataPointLabelColor = Colours.black.withAlphaComponent(0.5)
         
-        graphView.backgroundFillColor = Colours.clear
+        graphView.backgroundFillColor = UIColor.clear
         graphView.addPlot(plot: barPlot)
         graphView.addReferenceLines(referenceLines: referenceLines)
         

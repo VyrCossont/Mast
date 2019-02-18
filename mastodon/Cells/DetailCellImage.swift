@@ -104,7 +104,7 @@ class DetailCellImage: UITableViewCell {
         contentView.addSubview(fromClient)
         contentView.addSubview(faves)
         
-        imageCountTag.backgroundColor = Colours.clear
+        imageCountTag.backgroundColor = UIColor.clear
         imageCountTag.translatesAutoresizingMaskIntoConstraints = false
         imageCountTag.layer.cornerRadius = 7
         imageCountTag.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
@@ -497,7 +497,7 @@ class DetailCellImage: UITableViewCell {
                 self.smallImage4.alpha = 0
             }
         } else {
-            imageCountTag.backgroundColor = Colours.clear
+            imageCountTag.backgroundColor = UIColor.clear
             imageCountTag.alpha = 0
             DispatchQueue.global(qos: .userInitiated).async {
             self.mainImageView.pin_setPlaceholder(with: UIImage(named: "imagebg")?.maskWithColor(color: UIColor(red: 30/250, green: 30/250, blue: 30/250, alpha: 1.0)))

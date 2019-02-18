@@ -296,7 +296,7 @@ public protocol DateTimePickerDelegate {
         contentView.layer.shadowOffset = CGSize(width: 0, height: -2.0)
         contentView.layer.shadowRadius = 1.5
         contentView.layer.shadowOpacity = 0
-        contentView.backgroundColor = Colours.clear
+        contentView.backgroundColor = UIColor.clear
         contentView.isHidden = true
         addSubview(contentView)
 		
@@ -309,7 +309,7 @@ public protocol DateTimePickerDelegate {
         
         // title view
         let titleView = UIView(frame: CGRect.zero)
-        titleView.backgroundColor = Colours.clear
+        titleView.backgroundColor = UIColor.clear
         contentView.addSubview(titleView)
         
         titleView.translatesAutoresizingMaskIntoConstraints = false
@@ -368,7 +368,7 @@ public protocol DateTimePickerDelegate {
         layout.itemSize = CGSize(width: 75, height: 80)
         
         dayCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        dayCollectionView.backgroundColor = Colours.clear
+        dayCollectionView.backgroundColor = UIColor.clear
         dayCollectionView.showsHorizontalScrollIndicator = false
         
         if includeMonth {
@@ -733,7 +733,7 @@ extension DateTimePicker: UITableViewDataSource, UITableViewDelegate {
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         cell.textLabel?.textColor = darkColor.withAlphaComponent(0.4)
         cell.textLabel?.highlightedTextColor = UIColor.white
-        cell.backgroundColor = Colours.clear
+        cell.backgroundColor = UIColor.clear
         // add module operation to set value same
         if tableView == amPmTableView {
             cell.textLabel?.text = (indexPath.row == 0) ? "AM" : "PM"

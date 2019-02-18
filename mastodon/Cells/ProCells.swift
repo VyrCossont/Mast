@@ -70,7 +70,7 @@ class ProCells: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataS
         if indexPath.item >= InstanceData.getAllInstances().count {
             
             cell.image.image = UIImage(named: "newac2")
-            cell.image.layer.borderColor = Colours.clear.cgColor
+            cell.image.layer.borderColor = UIColor.clear.cgColor
             cell.image.layer.borderWidth = 0
             
         } else {
@@ -90,8 +90,7 @@ class ProCells: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataS
         
             cell.image.pin_setImage(from: URL(string: account.avatar))
             
-            cell.image.backgroundColor = Colours.clear
-            
+            cell.image.backgroundColor = UIColor.clear
         }
         
         cell.image.layer.cornerRadius = 27.5
@@ -112,7 +111,7 @@ class ProCells: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataS
         cell.frame.size.width = 55
         cell.frame.size.height = 55
         
-        cell.backgroundColor = Colours.clear
+        cell.backgroundColor = UIColor.clear
         
         return cell
     }

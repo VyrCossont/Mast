@@ -31,7 +31,7 @@ class RepliesCellImage: SwipeTableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         profileImageView.backgroundColor = Colours.white
-        moreImage.backgroundColor = Colours.clear
+        moreImage.backgroundColor = UIColor.clear
         
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         mainImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +97,7 @@ class RepliesCellImage: SwipeTableViewCell {
         contentView.addSubview(toot)
         contentView.addSubview(moreImage)
         
-        imageCountTag.backgroundColor = Colours.clear
+        imageCountTag.backgroundColor = UIColor.clear
         imageCountTag.translatesAutoresizingMaskIntoConstraints = false
         imageCountTag.layer.cornerRadius = 7
         imageCountTag.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
@@ -336,7 +336,7 @@ class RepliesCellImage: SwipeTableViewCell {
             imageCountTag.backgroundColor = Colours.tabSelected
             imageCountTag.alpha = 1
         } else {
-            imageCountTag.backgroundColor = Colours.clear
+            imageCountTag.backgroundColor = UIColor.clear
             imageCountTag.alpha = 0
         }
         

@@ -31,8 +31,8 @@ class NotificationCell: SwipeTableViewCell {
         
         profileImageView.backgroundColor = Colours.white
         typeImage.backgroundColor = Colours.white
-        moreImage.backgroundColor = Colours.clear
-        warningB.backgroundColor = Colours.clear
+        moreImage.backgroundColor = UIColor.clear
+        warningB.backgroundColor = UIColor.clear
         
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         typeImage.translatesAutoresizingMaskIntoConstraints = false
@@ -406,12 +406,12 @@ class NotificationCell: SwipeTableViewCell {
                 warningB.addTarget(self, action: #selector(self.didTouchWarning), for: .touchUpInside)
                 warningB.alpha = 1
             } else {
-                warningB.backgroundColor = Colours.clear
+                warningB.backgroundColor = UIColor.clear
                 warningB.alpha = 0
             }
             
         } else {
-            warningB.backgroundColor = Colours.clear
+            warningB.backgroundColor = UIColor.clear
             warningB.alpha = 0
         }
         
@@ -420,7 +420,7 @@ class NotificationCell: SwipeTableViewCell {
     }
     
     @objc func didTouchWarning() {
-        warningB.backgroundColor = Colours.clear
+        warningB.backgroundColor = UIColor.clear
         warningB.alpha = 0
         
         if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {

@@ -39,8 +39,8 @@ class NotificationCellImage: SwipeTableViewCell {
         
         profileImageView.backgroundColor = Colours.white
         typeImage.backgroundColor = Colours.white
-        moreImage.backgroundColor = Colours.clear
-        warningB.backgroundColor = Colours.clear
+        moreImage.backgroundColor = UIColor.clear
+        warningB.backgroundColor = UIColor.clear
         
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         typeImage.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +121,7 @@ class NotificationCellImage: SwipeTableViewCell {
         contentView.addSubview(toot)
         contentView.addSubview(moreImage)
         
-        imageCountTag.backgroundColor = Colours.clear
+        imageCountTag.backgroundColor = UIColor.clear
         imageCountTag.translatesAutoresizingMaskIntoConstraints = false
         imageCountTag.layer.cornerRadius = 7
         imageCountTag.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
@@ -643,7 +643,7 @@ class NotificationCellImage: SwipeTableViewCell {
                 self.smallImage4.alpha = 0
             }
         } else {
-            imageCountTag.backgroundColor = Colours.clear
+            imageCountTag.backgroundColor = UIColor.clear
             imageCountTag.alpha = 0
             DispatchQueue.global(qos: .userInitiated).async {
             self.mainImageView.pin_setPlaceholder(with: UIImage(named: "imagebg")?.maskWithColor(color: UIColor(red: 30/250, green: 30/250, blue: 30/250, alpha: 1.0)))
@@ -668,12 +668,12 @@ class NotificationCellImage: SwipeTableViewCell {
                 warningB.addTarget(self, action: #selector(self.didTouchWarning), for: .touchUpInside)
                 warningB.alpha = 1
             } else {
-                warningB.backgroundColor = Colours.clear
+                warningB.backgroundColor = UIColor.clear
                 warningB.alpha = 0
             }
             
         } else {
-            warningB.backgroundColor = Colours.clear
+            warningB.backgroundColor = UIColor.clear
             warningB.alpha = 0
         }
         
@@ -681,7 +681,7 @@ class NotificationCellImage: SwipeTableViewCell {
     }
     
     @objc func didTouchWarning() {
-        warningB.backgroundColor = Colours.clear
+        warningB.backgroundColor = UIColor.clear
         warningB.alpha = 0
         
         if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {

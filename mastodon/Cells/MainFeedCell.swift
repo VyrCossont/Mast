@@ -30,9 +30,9 @@ class MainFeedCell: SwipeTableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         profileImageView.backgroundColor = Colours.white
-        profileImageView2.backgroundColor = Colours.clear
-        warningB.backgroundColor = Colours.clear
-        moreImage.backgroundColor = Colours.clear
+        profileImageView2.backgroundColor = UIColor.clear
+        warningB.backgroundColor = UIColor.clear
+        moreImage.backgroundColor = UIColor.clear
         
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         profileImageView2.translatesAutoresizingMaskIntoConstraints = false
@@ -453,19 +453,19 @@ class MainFeedCell: SwipeTableViewCell {
                 warningB.addTarget(self, action: #selector(self.didTouchWarning), for: .touchUpInside)
                 warningB.alpha = 1
             } else {
-                warningB.backgroundColor = Colours.clear
+                warningB.backgroundColor = UIColor.clear
                 warningB.alpha = 0
             }
             
         } else {
-            warningB.backgroundColor = Colours.clear
+            warningB.backgroundColor = UIColor.clear
             warningB.alpha = 0
         }
         
     }
     
     @objc func didTouchWarning() {
-        warningB.backgroundColor = Colours.clear
+        warningB.backgroundColor = UIColor.clear
         warningB.alpha = 0
         if (UserDefaults.standard.object(forKey: "hapticToggle") == nil) || (UserDefaults.standard.object(forKey: "hapticToggle") as! Int == 0) {
             let selection = UISelectionFeedbackGenerator()

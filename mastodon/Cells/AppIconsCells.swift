@@ -32,7 +32,7 @@ class AppIconsCells: UITableViewCell, UICollectionViewDelegate, UICollectionView
         } else {
             collectionView = UICollectionView(frame: CGRect(x: CGFloat(0), y: CGFloat(0), width: CGFloat(UIScreen.main.bounds.width), height: CGFloat(130)), collectionViewLayout: layout)
         }
-        collectionView.backgroundColor = Colours.clear
+        collectionView.backgroundColor = UIColor.clear
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
@@ -114,7 +114,7 @@ class AppIconsCells: UITableViewCell, UICollectionViewDelegate, UICollectionView
         cell.frame.size.width = 80
         cell.frame.size.height = 80
         
-        cell.backgroundColor = Colours.clear
+        cell.backgroundColor = UIColor.clear
         
         return cell
     }

@@ -28,7 +28,7 @@ class DateCollectionViewCell: UICollectionViewCell {
         
         contentView.addSubview(dayLabel)
         contentView.addSubview(numberLabel)
-        contentView.backgroundColor = Colours.clear
+        contentView.backgroundColor = UIColor.clear
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
         contentView.layer.borderWidth = 0
@@ -42,7 +42,7 @@ class DateCollectionViewCell: UICollectionViewCell {
         didSet {
             dayLabel.textColor = isSelected == true ? .white : UIColor.white.withAlphaComponent(0.5)
             numberLabel.textColor = isSelected == true ? .white : .white
-            contentView.backgroundColor = isSelected == true ? UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 0.5) : Colours.clear
+            contentView.backgroundColor = isSelected == true ? UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 0.5) : UIColor.clear
             contentView.layer.borderWidth = isSelected == true ? 0 : 0
         }
     }
@@ -64,7 +64,7 @@ class DateCollectionViewCell: UICollectionViewCell {
         numberLabel.textColor = isSelected == true ? .white : .white
         
         contentView.layer.borderColor = darkColor.withAlphaComponent(0.2).cgColor
-        contentView.backgroundColor = isSelected == true ? UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 0.5) : Colours.clear
+        contentView.backgroundColor = isSelected == true ? UIColor(red: 0, green: 22.0/255.0, blue: 39.0/255.0, alpha: 0.5) : UIColor.clear
     }
     
 }

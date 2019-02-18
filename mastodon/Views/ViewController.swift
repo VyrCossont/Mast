@@ -81,39 +81,11 @@ class ViewController: UITabBarController, UITabBarControllerDelegate, UITextFiel
     var tableViewLists = UITableView()
     let volumeBar = VolumeBar.shared
     
-    func siriLight() {
-        UIApplication.shared.statusBarStyle = .default
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(0, forKey: "theme")
-        self.genericStuff()
-    }
-    
-    func siriDark() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(1, forKey: "theme")
-        self.genericStuff()
-    }
-    
-    func siriDark2() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(2, forKey: "theme")
-        self.genericStuff()
-    }
-    
-    func siriOled() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(3, forKey: "theme")
-        self.genericStuff()
-    }
-    
-    func siriBlue() {
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        UserDefaults.standard.set(4, forKey: "theme")
-        self.genericStuff()
+    func changeTheme(_ namedTheme: NamedTheme) {
+        UserDefaults.theme = namedTheme
+        DispatchQueue.main.async {
+            self.genericStuff()
+        }
     }
     
     func siriConfetti() {
@@ -121,6 +93,8 @@ class ViewController: UITabBarController, UITabBarControllerDelegate, UITextFiel
     }
     
     func genericStuff() {
+        UIApplication.shared.statusBarStyle = UserDefaults.theme.statusBarStyle
+        Colours.keyCol = UserDefaults.theme.keyboardAppearance
         
         self.firstView.loadLoadLoad()
         self.secondView.loadLoadLoad()
@@ -159,92 +133,37 @@ class ViewController: UITabBarController, UITabBarControllerDelegate, UITextFiel
     }
     
     func setupSiri() {
-            let activity1 = NSUserActivity(activityType: "com.shi.Mast.light")
-            activity1.title = "Switch to light mode".localized
-            activity1.userInfo = ["state" : "light"]
-            activity1.isEligibleForSearch = true
-            if #available(iOS 12.0, *) {
-                activity1.isEligibleForPrediction = true
-                activity1.persistentIdentifier = "com.shi.Mast.light"
-            } else {
-                // Fallback on earlier versions
+        let delayIncrement = 1.5
+        var delayCurrent = 0.0
+        for namedTheme in NamedTheme.allCases {
+            delay(delayCurrent) {
+                let activity = NSUserActivity(activityType: namedTheme.activityType)
+                activity.title = namedTheme.activityTitle.localized
+                activity.isEligibleForSearch = true
+                if #available(iOS 12.0, *) {
+                    activity.isEligibleForPrediction = true
+                    activity.persistentIdentifier = namedTheme.activityType
+                } else {
+                    // Fallback on earlier versions
+                }
+                self.view.userActivity = activity
+                activity.becomeCurrent()
             }
-            self.view.userActivity = activity1
-            activity1.becomeCurrent()
-        
-        delay(1.5) {
-            let activity2 = NSUserActivity(activityType: "com.shi.Mast.dark")
-            activity2.title = "Switch to dark mode".localized
-            activity2.userInfo = ["state" : "dark"]
-            activity2.isEligibleForSearch = true
-            if #available(iOS 12.0, *) {
-                activity2.isEligibleForPrediction = true
-                activity2.persistentIdentifier = "com.shi.Mast.dark"
-            } else {
-                // Fallback on earlier versions
-            }
-            self.view.userActivity = activity2
-            activity2.becomeCurrent()
+            delayCurrent += delayIncrement
         }
         
-        delay(1.5) {
-            let activity21 = NSUserActivity(activityType: "com.shi.Mast.dark2")
-            activity21.title = "Switch to extra dark mode".localized
-            activity21.userInfo = ["state" : "dark2"]
-            activity21.isEligibleForSearch = true
+        delay(delayCurrent) {
+            let activity = NSUserActivity(activityType: "com.shi.Mast.confetti")
+            activity.title = "Confetti time".localized
+            activity.isEligibleForSearch = true
             if #available(iOS 12.0, *) {
-                activity21.isEligibleForPrediction = true
-                activity21.persistentIdentifier = "com.shi.Mast.dark2"
+                activity.isEligibleForPrediction = true
+                activity.persistentIdentifier = "com.shi.Mast.confetti"
             } else {
                 // Fallback on earlier versions
             }
-            self.view.userActivity = activity21
-            activity21.becomeCurrent()
-        }
-        
-        delay(3) {
-            let activity3 = NSUserActivity(activityType: "com.shi.Mast.oled")
-            activity3.title = "Switch to true black dark mode".localized
-            activity3.userInfo = ["state" : "oled"]
-            activity3.isEligibleForSearch = true
-            if #available(iOS 12.0, *) {
-                activity3.isEligibleForPrediction = true
-                activity3.persistentIdentifier = "com.shi.Mast.oled"
-            } else {
-                // Fallback on earlier versions
-            }
-            self.view.userActivity = activity3
-            activity3.becomeCurrent()
-        }
-        
-        delay(4.5) {
-            let activity3 = NSUserActivity(activityType: "com.shi.Mast.bluemid")
-            activity3.title = "Switch to midnight blue mode".localized
-            activity3.userInfo = ["state" : "blue"]
-            activity3.isEligibleForSearch = true
-            if #available(iOS 12.0, *) {
-                activity3.isEligibleForPrediction = true
-                activity3.persistentIdentifier = "com.shi.Mast.bluemid"
-            } else {
-                // Fallback on earlier versions
-            }
-            self.view.userActivity = activity3
-            activity3.becomeCurrent()
-        }
-        
-        delay(6) {
-            let activity3 = NSUserActivity(activityType: "com.shi.Mast.confetti")
-            activity3.title = "Confetti time".localized
-            activity3.userInfo = ["state" : "confetti"]
-            activity3.isEligibleForSearch = true
-            if #available(iOS 12.0, *) {
-                activity3.isEligibleForPrediction = true
-                activity3.persistentIdentifier = "com.shi.Mast.confetti"
-            } else {
-                // Fallback on earlier versions
-            }
-            self.view.userActivity = activity3
-            activity3.becomeCurrent()
+            self.view.userActivity = activity
+            activity.becomeCurrent()
         }
     }
     
@@ -702,11 +621,11 @@ class ViewController: UITabBarController, UITabBarControllerDelegate, UITextFiel
         NotificationCenter.default.addObserver(self, selector: #selector(self.switch22), name: NSNotification.Name(rawValue: "switch22"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.switch33), name: NSNotification.Name(rawValue: "switch33"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.switch44), name: NSNotification.Name(rawValue: "switch44"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeLight), name: NSNotification.Name(rawValue: "light"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeNight), name: NSNotification.Name(rawValue: "night"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeNight2), name: NSNotification.Name(rawValue: "night2"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.themeBlack), name: NSNotification.Name(rawValue: "black"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.midBlue), name: NSNotification.Name(rawValue: "midblue"), object: nil)
+        
+        for namedTheme in NamedTheme.allCases {
+            NotificationCenter.default.addObserver(self, selector: #selector(self.changeThemeNotificationHandler), name: namedTheme.notificationName, object: nil)
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.confettiCreate), name: NSNotification.Name(rawValue: "confettiCreate"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.confettiCreateRe), name: NSNotification.Name(rawValue: "confettiCreateRe"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.confettiCreateLi), name: NSNotification.Name(rawValue: "confettiCreateLi"), object: nil)
@@ -1686,75 +1605,10 @@ class ViewController: UITabBarController, UITabBarControllerDelegate, UITextFiel
             selection.impactOccurred()
             }
             
-            var newNum = 0
-            if UserDefaults.standard.object(forKey: "theme") == nil {
-                newNum = 1
-                UIApplication.shared.statusBarStyle = .lightContent
-                Colours.keyCol = UIKeyboardAppearance.dark
-            } else {
-                let z = UserDefaults.standard.object(forKey: "theme") as! Int
-                if z == 0 {
-                    newNum = 1
-                    UIApplication.shared.statusBarStyle = .lightContent
-                    Colours.keyCol = UIKeyboardAppearance.dark
-                }
-                if z == 1 {
-                    newNum = 2
-                    UIApplication.shared.statusBarStyle = .lightContent
-                    Colours.keyCol = UIKeyboardAppearance.dark
-                }
-                if z == 2 {
-                    newNum = 3
-                    UIApplication.shared.statusBarStyle = .lightContent
-                    Colours.keyCol = UIKeyboardAppearance.dark
-                }
-                if z == 3 {
-                    newNum = 4
-                    UIApplication.shared.statusBarStyle = .lightContent
-                    Colours.keyCol = UIKeyboardAppearance.dark
-                }
-                if z == 4 {
-                    newNum = 0
-                    UIApplication.shared.statusBarStyle = .default
-                    Colours.keyCol = UIKeyboardAppearance.light
-                }
+            // Switch to next theme.
+            if let newTheme = NamedTheme(rawValue: (UserDefaults.theme.rawValue + 1) % NamedTheme.allCases.count) {
+                changeTheme(newTheme)
             }
-            
-            UserDefaults.standard.set(newNum, forKey: "theme")
-            
-            DispatchQueue.main.async {
-                
-                self.firstView.loadLoadLoad()
-                self.secondView.loadLoadLoad()
-                self.thirdView.loadLoadLoad()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                
-                self.view.backgroundColor = Colours.white
-                self.navigationController?.navigationBar.backgroundColor = Colours.white
-                self.navigationController?.navigationBar.tintColor = Colours.white
-                
-                self.tabBar.barTintColor = Colours.white
-                self.tabBar.backgroundColor = Colours.white
-                self.tabBar.unselectedItemTintColor = Colours.tabUnselected
-                self.tabBar.tintColor = Colours.tabSelected
-                
-                self.firstView.view.backgroundColor = Colours.white
-                self.secondView.view.backgroundColor = Colours.white
-                self.thirdView.view.backgroundColor = Colours.white
-                self.fourthView.view.backgroundColor = Colours.white
-                
-                self.tabOne.navigationBar.backgroundColor = Colours.white
-                self.tabOne.navigationBar.barTintColor = Colours.white
-                self.tabTwo.navigationBar.backgroundColor = Colours.white
-                self.tabTwo.navigationBar.barTintColor = Colours.white
-                self.tabThree.navigationBar.backgroundColor = Colours.white
-                self.tabThree.navigationBar.barTintColor = Colours.white
-                self.tabFour.navigationBar.backgroundColor = Colours.white
-                self.tabFour.navigationBar.barTintColor = Colours.white
-                
-                self.statusBarView.backgroundColor = Colours.white
-            
-        }
         }
             
         } else if (UserDefaults.standard.object(forKey: "longToggle") as! Int == 1) {
@@ -1790,223 +1644,12 @@ class ViewController: UITabBarController, UITabBarControllerDelegate, UITextFiel
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    @objc func themeLight() {
-        
-                UIApplication.shared.statusBarStyle = .default
-                Colours.keyCol = UIKeyboardAppearance.light
-            UserDefaults.standard.set(0, forKey: "theme")
-            
-            DispatchQueue.main.async {
-                
-                self.firstView.loadLoadLoad()
-                self.secondView.loadLoadLoad()
-                self.thirdView.loadLoadLoad()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-                
-                self.view.backgroundColor = Colours.white
-                self.navigationController?.navigationBar.backgroundColor = Colours.white
-                self.navigationController?.navigationBar.tintColor = Colours.white
-                
-                self.tabBar.barTintColor = Colours.white
-                self.tabBar.backgroundColor = Colours.white
-                self.tabBar.unselectedItemTintColor = Colours.tabUnselected
-                self.tabBar.tintColor = Colours.tabSelected
-                
-                self.firstView.view.backgroundColor = Colours.white
-                self.secondView.view.backgroundColor = Colours.white
-                self.thirdView.view.backgroundColor = Colours.white
-                self.fourthView.view.backgroundColor = Colours.white
-                
-                self.tabOne.navigationBar.backgroundColor = Colours.white
-                self.tabOne.navigationBar.barTintColor = Colours.white
-                self.tabTwo.navigationBar.backgroundColor = Colours.white
-                self.tabTwo.navigationBar.barTintColor = Colours.white
-                self.tabThree.navigationBar.backgroundColor = Colours.white
-                self.tabThree.navigationBar.barTintColor = Colours.white
-                self.tabFour.navigationBar.backgroundColor = Colours.white
-                self.tabFour.navigationBar.barTintColor = Colours.white
-                
-                self.statusBarView.backgroundColor = Colours.white
-                
-            }
-    }
-    
-    @objc func themeNight() {
-        
-            UIApplication.shared.statusBarStyle = .lightContent
-            Colours.keyCol = UIKeyboardAppearance.dark
-        
-        UserDefaults.standard.set(1, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            self.firstView.loadLoadLoad()
-            self.secondView.loadLoadLoad()
-            self.thirdView.loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.white
-            
-            self.tabBar.barTintColor = Colours.white
-            self.tabBar.backgroundColor = Colours.white
-            self.tabBar.unselectedItemTintColor = Colours.tabUnselected
-            self.tabBar.tintColor = Colours.tabSelected
-            
-            self.firstView.view.backgroundColor = Colours.white
-            self.secondView.view.backgroundColor = Colours.white
-            self.thirdView.view.backgroundColor = Colours.white
-            self.fourthView.view.backgroundColor = Colours.white
-            
-            self.tabOne.navigationBar.backgroundColor = Colours.white
-            self.tabOne.navigationBar.barTintColor = Colours.white
-            self.tabTwo.navigationBar.backgroundColor = Colours.white
-            self.tabTwo.navigationBar.barTintColor = Colours.white
-            self.tabThree.navigationBar.backgroundColor = Colours.white
-            self.tabThree.navigationBar.barTintColor = Colours.white
-            self.tabFour.navigationBar.backgroundColor = Colours.white
-            self.tabFour.navigationBar.barTintColor = Colours.white
-            
-            self.statusBarView.backgroundColor = Colours.white
-            
+    @objc func changeThemeNotificationHandler(notification: NSNotification) {
+        guard let namedTheme = NamedTheme(notificationName: notification.name) else {
+            return
         }
+        changeTheme(namedTheme)
     }
-    
-    @objc func themeNight2() {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        
-        UserDefaults.standard.set(2, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            self.firstView.loadLoadLoad()
-            self.secondView.loadLoadLoad()
-            self.thirdView.loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.white
-            
-            self.tabBar.barTintColor = Colours.white
-            self.tabBar.backgroundColor = Colours.white
-            self.tabBar.unselectedItemTintColor = Colours.tabUnselected
-            self.tabBar.tintColor = Colours.tabSelected
-            
-            self.firstView.view.backgroundColor = Colours.white
-            self.secondView.view.backgroundColor = Colours.white
-            self.thirdView.view.backgroundColor = Colours.white
-            self.fourthView.view.backgroundColor = Colours.white
-            
-            self.tabOne.navigationBar.backgroundColor = Colours.white
-            self.tabOne.navigationBar.barTintColor = Colours.white
-            self.tabTwo.navigationBar.backgroundColor = Colours.white
-            self.tabTwo.navigationBar.barTintColor = Colours.white
-            self.tabThree.navigationBar.backgroundColor = Colours.white
-            self.tabThree.navigationBar.barTintColor = Colours.white
-            self.tabFour.navigationBar.backgroundColor = Colours.white
-            self.tabFour.navigationBar.barTintColor = Colours.white
-            
-            self.statusBarView.backgroundColor = Colours.white
-            
-        }
-    }
-    
-    @objc func themeBlack() {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-                Colours.keyCol = UIKeyboardAppearance.dark
-        
-        UserDefaults.standard.set(3, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            self.firstView.loadLoadLoad()
-            self.secondView.loadLoadLoad()
-            self.thirdView.loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.white
-            
-            self.tabBar.barTintColor = Colours.white
-            self.tabBar.backgroundColor = Colours.white
-            self.tabBar.unselectedItemTintColor = Colours.tabUnselected
-            self.tabBar.tintColor = Colours.tabSelected
-            
-            self.firstView.view.backgroundColor = Colours.white
-            self.secondView.view.backgroundColor = Colours.white
-            self.thirdView.view.backgroundColor = Colours.white
-            self.fourthView.view.backgroundColor = Colours.white
-            
-            self.tabOne.navigationBar.backgroundColor = Colours.white
-            self.tabOne.navigationBar.barTintColor = Colours.white
-            self.tabTwo.navigationBar.backgroundColor = Colours.white
-            self.tabTwo.navigationBar.barTintColor = Colours.white
-            self.tabThree.navigationBar.backgroundColor = Colours.white
-            self.tabThree.navigationBar.barTintColor = Colours.white
-            self.tabFour.navigationBar.backgroundColor = Colours.white
-            self.tabFour.navigationBar.barTintColor = Colours.white
-            
-            self.statusBarView.backgroundColor = Colours.white
-            
-        }
-    }
-    
-    
-    @objc func midBlue() {
-        
-        UIApplication.shared.statusBarStyle = .lightContent
-        Colours.keyCol = UIKeyboardAppearance.dark
-        
-        UserDefaults.standard.set(4, forKey: "theme")
-        
-        DispatchQueue.main.async {
-            
-            self.firstView.loadLoadLoad()
-            self.secondView.loadLoadLoad()
-            self.thirdView.loadLoadLoad()
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: self)
-            
-            self.view.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.backgroundColor = Colours.white
-            self.navigationController?.navigationBar.tintColor = Colours.white
-            
-            self.tabBar.barTintColor = Colours.white
-            self.tabBar.backgroundColor = Colours.white
-            self.tabBar.unselectedItemTintColor = Colours.tabUnselected
-            self.tabBar.tintColor = Colours.tabSelected
-            
-            self.firstView.view.backgroundColor = Colours.white
-            self.secondView.view.backgroundColor = Colours.white
-            self.thirdView.view.backgroundColor = Colours.white
-            self.fourthView.view.backgroundColor = Colours.white
-            
-            self.tabOne.navigationBar.backgroundColor = Colours.white
-            self.tabOne.navigationBar.barTintColor = Colours.white
-            self.tabTwo.navigationBar.backgroundColor = Colours.white
-            self.tabTwo.navigationBar.barTintColor = Colours.white
-            self.tabThree.navigationBar.backgroundColor = Colours.white
-            self.tabThree.navigationBar.barTintColor = Colours.white
-            self.tabFour.navigationBar.backgroundColor = Colours.white
-            self.tabFour.navigationBar.barTintColor = Colours.white
-            
-            self.statusBarView.backgroundColor = Colours.white
-            
-        }
-    }
-    
     
     @objc func signOutNewInstance() {
         
